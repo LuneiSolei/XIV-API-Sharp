@@ -2,7 +2,6 @@
 using XivApiSharp.Client.Core.Options;
 using XivApiSharp.Client.Services;
 using Microsoft.Extensions.DependencyInjection;
-using XivApiSharp.Client.Infrastructure.Requests.Steps;
 using XivApiSharp.Tests.Options;
 
 namespace XivApiSharp.Tests;
@@ -10,27 +9,6 @@ namespace XivApiSharp.Tests;
 [TestFixture]
 public class XivApiServiceTests
 {
-    // Equal To (string) Clause Test:
-    private const string EqualToSpecifier = "Name";
-    private const string EqualToValue = "Tank You, Paladin I";
-    private const string EqualToExpectedValue = 
-        "Name=\"Tank+You%2c+Paladin+I\"";
-    private const string EqualToSheet = "Achievement";
-    
-    // Partially Equal To (string) Clause Test:
-    private const string PartiallyEqualToSpecifier = "Name";
-    private const string PartiallyEqualToValue = "Tank You, Paladin";
-    private const string PartiallyEqualToExpectedValue =
-        "Name~\"Tank+You%2c+Paladin\"";
-    private const string PartiallyEqualToSheet = "Achievement";
-    
-    // Greater Than (string) Clause Test:
-    private const string GreaterThanSpecifier = "SomeField";
-    private const string GreaterThanValue = "5";
-    private const string GreaterThanExpectedValue =
-        "SomeField>\"5\"";
-    // TODO: Double check that strings are converted to ints in the actual API
-    
     // Storage Variables
     private readonly IServiceCollection _services = new ServiceCollection();
     private ServiceProvider _provider;
@@ -55,11 +33,12 @@ public class XivApiServiceTests
     }
 
     [Test]
-    public void NewClause_StringEqualTo_BuildsCorrectly()
+    public void NewClause_EqualToString_BuildsCorrectly()
     {
-        ClauseTestOptions testOpts = AssemblySetup.TestConfig.EqualToClause;
+        ClauseTestOptions testOpts = AssemblySetup.TestConfig.EqualToClauseString;
+        
         Clause clause = XivApiService.NewClause()
-            .WhereField(testOpts.Specifier)
+            .WhereSpecifier(testOpts.Specifier)
             .Is()
             .EqualTo(testOpts.Value);
 
@@ -68,48 +47,32 @@ public class XivApiServiceTests
     }
 
     [Test]
-    public void NewClause_StringPartiallyEqualTo_BuildsCorrectly()
+    public void NewClause_PartiallyEqualToString_BuildsCorrectly()
     {
+        ClauseTestOptions testOpts = AssemblySetup.TestConfig
+            .PartiallyEqualToClauseString;
+        
         Clause clause = XivApiService.NewClause()
-            .WhereField(PartiallyEqualToSpecifier)
+            .WhereSpecifier(testOpts.Specifier)
             .Is()
-            .PartiallyEqualTo(PartiallyEqualToValue);
+            .PartiallyEqualTo(testOpts.Value);
 
         Assert.That(clause.ToString(), 
-            Is.EqualTo(PartiallyEqualToExpectedValue));
+            Is.EqualTo(testOpts.ExpectedValue));
     }
 
     [Test]
-    public void NewClause_StringGreaterThan_BuildsCorrectly()
+    public void NewClause_GreaterThanString_BuildsCorrectly()
     {
+        ClauseTestOptions testOpts = AssemblySetup.TestConfig
+            .GreaterThanClauseString;
+        
         Clause clause = XivApiService.NewClause()
-            .WhereField(GreaterThanSpecifier)
+            .WhereSpecifier(testOpts.Specifier)
             .Is()
-            .GreaterThan(GreaterThanValue);
+            .GreaterThan(testOpts.Value);
         
         Assert.That(clause.ToString(),
-            Is.EqualTo(GreaterThanExpectedValue));
-    }
-
-    // [Test]
-    // public void NewClause_StringGreaterThanOrEqualTo_BuildsCorrectly()
-    // {
-    //     Clause clause = XivApiService.NewClause()
-    //         .WhereField(GreaterThanOrEqualToSpecifier)
-    //         .Is()
-    //         .GreaterThanOrEqualTo(GreaterThanOrEqualToValue);
-    // }
-    
-    [Test]
-    public void NewRequest_Search_BuildsCorrectly()
-    {
-        Clause clause = XivApiService.NewClause()
-            .WhereField(EqualToSpecifier)
-            .Is()
-            .EqualTo(EqualToValue);
-
-        ISearchSheetRequestStep request = _service.NewRequestBuilder()
-            .AsSearch()
-            .WithSheet(EqualToSheet);
+            Is.EqualTo(testOpts.ExpectedValue));
     }
 }
