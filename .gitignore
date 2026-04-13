@@ -10,6 +10,11 @@
 [Tt]emp/
 [Tt]mp/
 
+# Rider
+.idea/
+*.sln.DotSettings.user
+*.DotSettings.user
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
