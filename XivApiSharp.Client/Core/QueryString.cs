@@ -1,20 +1,22 @@
+using XivApiSharp.Client.Core.Clauses;
+
 namespace XivApiSharp.Client.Core;
 
 public record QueryString
 {
-    private List<ClauseGroup> ClauseGroups { get; } = [];
-    private List<Clause> Clauses { get; } = [];
+    private List<IClauseGroup> ClauseGroups { get; } = [];
+    private List<IClause> Clauses { get; } = [];
 
-    public void AddClause(Clause clause) => 
+    public void AddClause<T>(Clause<T> clause) => 
         Clauses.Add(clause);
 
-    public void AddClauses(IEnumerable<Clause> clauses) =>
+    public void AddClauses<T>(IEnumerable<Clause<T>> clauses) =>
         Clauses.AddRange(clauses);
 
-    public void AddClauseGroup(ClauseGroup clauseGroup) => 
+    public void AddClauseGroup<T>(ClauseGroup<T> clauseGroup) => 
         ClauseGroups.Add(clauseGroup);
     
-    public void AddClauseGroups(IEnumerable<ClauseGroup> clausesGroups) =>
+    public void AddClauseGroups<T>(IEnumerable<IClauseGroup> clausesGroups) =>
         ClauseGroups.AddRange(clausesGroups);
     
     public override string ToString()

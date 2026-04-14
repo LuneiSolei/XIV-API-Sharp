@@ -1,6 +1,7 @@
 using System.Numerics;
 using System.Web;
 using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Enums;
 using XivApiSharp.Client.Infrastructure.Requests.Clauses.Steps;
 
@@ -31,7 +32,6 @@ public class ClauseBuilder : IInitialClauseBuilderStep, IConditionStep,
     private string _name = string.Empty;
     private ClauseConditionals _conditionals;
     private ClauseOperators _operator;
-    private string _value = string.Empty;
     
     internal ClauseBuilder() {}
 
@@ -42,86 +42,81 @@ public class ClauseBuilder : IInitialClauseBuilderStep, IConditionStep,
         
         return this;
     }
-    
-    // Condition Step
-    public IOperatorStep Is()
+
+    public IOperatorStep Is
     {
-        _conditionals = ClauseConditionals.Is; 
-        
-        return this;
+        get
+        {
+            _conditionals = ClauseConditionals.Is;
+            
+            return this;
+        }
     }
 
-    public IOperatorStep IsNot()
+    public IOperatorStep IsNot
     {
-        _conditionals = ClauseConditionals.IsNot; 
-        
-        return this;
+        get
+        {
+            _conditionals = ClauseConditionals.IsNot;
+
+            return this;
+        }
     }
 
     // Operator Step
-    public Clause PartiallyEqualTo(string value) =>
+    public Clause<string> PartiallyEqualTo(string value) =>
         BuildClause(ClauseOperators.PartiallyEqualTo, value);
 
-    public Clause PartiallyEqualTo(bool value) =>
-        BuildClause(ClauseOperators.PartiallyEqualTo, value.ToString());
-
-    public Clause PartiallyEqualTo<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.PartiallyEqualTo, 
-            value.ToString() ?? string.Empty);
-
-    public Clause EqualTo(string value) =>
+    public Clause<string> EqualTo(string value) =>
         BuildClause(ClauseOperators.EqualTo, value);
 
-    public Clause EqualTo(bool value) =>
-        BuildClause(ClauseOperators.LessThanOrEqualTo, value.ToString());
+    public Clause<bool> EqualTo(bool value) =>
+        BuildClause(ClauseOperators.EqualTo, value);
 
-    public Clause EqualTo<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.EqualTo, 
-            value.ToString() ?? string.Empty);
+    public Clause<T> EqualTo<T>(T value) where T : INumber<T> =>
+        BuildClause(ClauseOperators.EqualTo, value);
 
-    public Clause GreaterThan(string value) =>
+    public Clause<T> GreaterThan<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.GreaterThan, value);
 
-    public Clause GreaterThan<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.GreaterThan, 
-            value.ToString() ?? string.Empty);
-
-    public Clause GreaterThanOrEqualTo(string value) =>
+    public Clause<T> GreaterThanOrEqualTo<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.GreaterThanOrEqualTo, value);
-
-    public Clause GreaterThanOrEqualTo<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.GreaterThanOrEqualTo, 
-            value.ToString() ?? string.Empty);
-
-    public Clause LessThan(string value) =>
-        BuildClause(ClauseOperators.LessThan, value);
     
-    public Clause LessThan<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.LessThan, 
-            value.ToString() ?? string.Empty);
+    public Clause<T> LessThan<T>(T value) where T : INumber<T> =>
+        BuildClause(ClauseOperators.LessThan, value);
 
-    public Clause LessThanOrEqualTo(string value) =>
+    public Clause<T> LessThanOrEqualTo<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.LessThanOrEqualTo, value);
 
-    public Clause LessThanOrEqualTo<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.LessThanOrEqualTo, 
-            value.ToString() ?? string.Empty);
-
     // Clause Building
-    private Clause BuildClause(ClauseOperators op, string value)
+    private Clause<T> BuildClause<T>(ClauseOperators op, T value)
     {
-        _operator = op;
-        _value = value;
-        Clause clause = new();
-        
-        AddClauseSpecifier(clause);
-        AddClauseOperator(clause);
-        AddClauseValue(clause);
+        Clause<T> clause = BuildCommon<T>(op);
+        clause.Value = value;
 
         return clause;
     }
+
+    private Clause<string> BuildClause(ClauseOperators op, string value)
+    {
+        Clause<string> clause = BuildCommon<string>(op);
+        clause.Value = $"\"{HttpUtility.UrlEncode(value)}\"";
+
+        return clause;
+    }
+
+    private Clause<T> BuildCommon<T>(ClauseOperators op)
+    {
+        _operator = op;
+        Clause<T> baseClause = new();
+        
+        AddClauseSpecifier(baseClause);
+        AddClauseOperator(baseClause);
+
+        return baseClause;
+    }
     
-    private void AddClauseSpecifier(Clause clause)
+    private void AddClauseSpecifier<T>(Clause<T> clause)
     {
         string specifier = _conditionals == ClauseConditionals.Is
             ? string.Empty
@@ -131,9 +126,6 @@ public class ClauseBuilder : IInitialClauseBuilderStep, IConditionStep,
         clause.Specifier = specifier;
     }
 
-    private void AddClauseOperator(Clause clause) => 
+    private void AddClauseOperator<T>(Clause<T> clause) => 
         clause.Operator = Utilities.ToOperatorSign(_operator);
-
-    private void AddClauseValue(Clause clause) => 
-        clause.Value = $"\"{HttpUtility.UrlEncode(_value)}\"";
 }

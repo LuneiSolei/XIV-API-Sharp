@@ -1,33 +1,28 @@
 using System.Numerics;
 using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Core.Clauses;
 
 namespace XivApiSharp.Client.Infrastructure.Requests.Clauses.Steps;
 
 public interface IOperatorStep
 {
-    // Partially Equal To
-    Clause PartiallyEqualTo(string value);
-    Clause PartiallyEqualTo(bool value);
-    Clause PartiallyEqualTo<T>(T value) where T : INumber<T>;
-    
     // Equal To
-    Clause EqualTo(string value);
-    Clause EqualTo(bool value);
-    Clause EqualTo<T>(T value) where T : INumber<T>;
+    Clause<string> EqualTo(string value);
+    Clause<bool> EqualTo(bool value);
+    Clause<T> EqualTo<T>(T value) where T : INumber<T>;
+    
+    // Partially Equal To
+    Clause<string> PartiallyEqualTo(string value);
     
     // Greater Than
-    Clause GreaterThan(string value);
-    Clause GreaterThan<T>(T value) where T : INumber<T>;
+    Clause<T> GreaterThan<T>(T value) where T : INumber<T>;
     
     // Greater Than or Equal To
-    Clause GreaterThanOrEqualTo(string value);
-    Clause GreaterThanOrEqualTo<T>(T value) where T : INumber<T>;
+    Clause<T> GreaterThanOrEqualTo<T>(T value) where T : INumber<T>;
     
     // Less Than
-    Clause LessThan(string value);
-    Clause LessThan<T>(T value) where T : INumber<T>;
+    Clause<T> LessThan<T>(T value) where T : INumber<T>;
     
     // Less Than or Equal To
-    Clause LessThanOrEqualTo(string value);
-    Clause LessThanOrEqualTo<T>(T value) where T : INumber<T>;
+    Clause<T> LessThanOrEqualTo<T>(T value) where T : INumber<T>;
 }

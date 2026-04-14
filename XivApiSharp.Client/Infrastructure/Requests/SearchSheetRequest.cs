@@ -1,4 +1,5 @@
 using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Enums;
 using XivApiSharp.Client.Core.Extensions;
 using XivApiSharp.Client.Core.Options;
@@ -50,7 +51,7 @@ public sealed class SearchSheetRequest : XivApiRequest, ISearchSheetRequestStep
         return this;
     }
 
-    public ISearchSheetRequestStep WithClause(Clause clause)
+    public ISearchSheetRequestStep WithClause<T>(Clause<T> clause)
     {
         _queryString ??= new QueryString();
         _queryString.AddClause(clause);
@@ -58,7 +59,7 @@ public sealed class SearchSheetRequest : XivApiRequest, ISearchSheetRequestStep
         return this;
     }
     
-    public ISearchSheetRequestStep WithClauses(IEnumerable<Clause> clauses)
+    public ISearchSheetRequestStep WithClauses<T>(IEnumerable<Clause<T>> clauses)
     {
         _queryString ??= new QueryString();
         _queryString.AddClauses(clauses);
@@ -66,19 +67,19 @@ public sealed class SearchSheetRequest : XivApiRequest, ISearchSheetRequestStep
         return this;
     }
 
-    public ISearchSheetRequestStep WithClauseGroup(ClauseGroup group)
+    public ISearchSheetRequestStep WithClauseGroup<T>(ClauseGroup<T> group)
     {
         _queryString ??= new QueryString();
-        _queryString.AddClauseGroup(group);
+        _queryString.AddClauseGroup<T>(group);
         
         return this;
     }
 
-    public ISearchSheetRequestStep WithClauseGroups(
-        IEnumerable<ClauseGroup> groups)
+    public ISearchSheetRequestStep WithClauseGroups<T>(
+        IEnumerable<ClauseGroup<T>> groups)
     {
         _queryString ??= new QueryString();
-        _queryString.AddClauseGroups(groups);
+        _queryString.AddClauseGroups<T>(groups);
         
         return this;
     }

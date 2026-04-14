@@ -1,4 +1,5 @@
 using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Enums;
 
 namespace XivApiSharp.Client.Infrastructure.Requests.Steps;
@@ -10,10 +11,10 @@ public interface ISearchSheetRequestStep
     ISearchSheetRequestStep WithSheets(List<string> sheets);
     
     // Query
-    ISearchSheetRequestStep WithClause(Clause clause);
-    ISearchSheetRequestStep WithClauses(IEnumerable<Clause> clauses);
-    ISearchSheetRequestStep WithClauseGroup(ClauseGroup group);
-    ISearchSheetRequestStep WithClauseGroups(IEnumerable<ClauseGroup> groups);
+    ISearchSheetRequestStep WithClause<T>(Clause<T> clause);
+    ISearchSheetRequestStep WithClauses<T>(IEnumerable<Clause<T>> clauses);
+    ISearchSheetRequestStep WithClauseGroup<T>(ClauseGroup<T> group);
+    ISearchSheetRequestStep WithClauseGroups<T>(IEnumerable<ClauseGroup<T>> groups);
     
     // Parameters
     ISearchSheetRequestStep WithVersion(string version);

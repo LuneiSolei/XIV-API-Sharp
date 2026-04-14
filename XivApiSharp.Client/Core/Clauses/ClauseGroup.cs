@@ -1,10 +1,10 @@
 using XivApiSharp.Client.Core.Enums;
 
-namespace XivApiSharp.Client.Core;
+namespace XivApiSharp.Client.Core.Clauses;
 
-public class ClauseGroup(ClauseGroupOperator? groupOperator, List<Clause>? clauses)
+public class ClauseGroup<T>(ClauseGroupOperator? groupOperator, List<IClause>? clauses) : IClauseGroup
 {
-    private List<Clause> Clauses { get; } = clauses ?? [];
+    private List<IClause> Clauses { get; }
     private ClauseGroupOperator Operator { get; } = 
         groupOperator ?? ClauseGroupOperator.Or;
 
