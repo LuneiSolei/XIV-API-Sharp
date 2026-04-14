@@ -1,6 +1,6 @@
 namespace XivApiSharp.Client.Core.Clauses.Interfaces;
 
-public interface IClauseGroup
+internal interface IClauseGroup
 {
     string ToString();
 }
