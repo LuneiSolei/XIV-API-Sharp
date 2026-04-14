@@ -3,7 +3,7 @@ using XivApiSharp.Client.Core.Enums;
 
 namespace XivApiSharp.Client.Core.Clauses;
 
-public class ClauseGroup(ClauseGroupOperator? groupOperator, List<IClause>? clauses) : IClauseGroup
+public class ClauseGroup(ClauseGroupOperator? groupOperator) : IClauseGroup
 {
     private List<IClause> Clauses { get; }
     private ClauseGroupOperator Operator { get; } = 
