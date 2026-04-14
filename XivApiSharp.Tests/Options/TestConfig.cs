@@ -1,8 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace XivApiSharp.Tests.Options;
 
 public class TestConfig
 {
-    public ClauseTestOptions EqualToClauseString { get; set; } = new();
-    public ClauseTestOptions PartiallyEqualToClauseString { get; set; } = new();
-    public ClauseTestOptions GreaterThanClauseString { get; set; } = new();
+    [Required] 
+    public ClauseConfig Clauses { get; set; } = null!;
 }

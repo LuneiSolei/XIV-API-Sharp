@@ -1,0 +1,226 @@
+﻿/* Tests the following:
+ *     PartiallyEqualTo (string)
+ *     EqualTo (string, bool, INumber)
+ *     GreaterThan (INumber)
+ *     GreaterThanOrEqualTo (INumber)
+ *     LessThan (INumber)
+ *     LessThanOrEqualTo (INumber)
+ */
+
+using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Services;
+using XivApiSharp.Client.Infrastructure.Requests.Clauses.Steps;
+using XivApiSharp.Tests.Options;
+using XivApiSharp.Tests.Options.ClauseConfigs.ClauseTestTypes;
+
+namespace XivApiSharp.Tests;
+
+[TestFixture]
+public class BaseClauseTests
+{
+    private static IEnumerable<TestCaseData> StringClauseTestCases()
+    {
+        TestConfig config = AssemblySetup.TestConfig;
+        
+        // EqualTo
+        yield return new TestCaseData(
+                config.Clauses.EqualTo.StringTest,
+                (Func<IOperatorStep, string, Clause>)((step, value) => step.EqualTo(value)))
+            .SetName("EqualTo (string)");
+        
+        // PartiallyEqualTo
+        yield return new TestCaseData(
+                config.Clauses.PartiallyEqualTo.StringTest,
+                (Func<IOperatorStep, string, Clause>)((step, value) => step.PartiallyEqualTo(value)))
+            .SetName("PartiallyEqualTo (bool)");
+    }
+    
+    private static IEnumerable<TestCaseData> BoolClauseTestCases()
+    {
+        TestConfig config = AssemblySetup.TestConfig;
+        
+        // EqualTo
+        yield return new TestCaseData(
+                config.Clauses.EqualTo.BoolTest,
+                (Func<IOperatorStep, bool, Clause>)((step, value) => step.EqualTo(value)))
+            .SetName("EqualTo (bool)");
+    }
+
+    private static IEnumerable<TestCaseData> IntClauseTestCases()
+    {
+        TestConfig config = AssemblySetup.TestConfig;
+        
+        // EqualTo
+        yield return new TestCaseData(
+                config.Clauses.EqualTo.IntTest, 
+                (Func<IOperatorStep, int, Clause>)((step, value) => step.EqualTo(value)))
+            .SetName("EqualTo (int)");
+        
+        // GreaterThan
+        yield return new TestCaseData(
+                config.Clauses.GreaterThan.IntTest, 
+                (Func<IOperatorStep, int, Clause>)((step, value) => step.GreaterThan(value)))
+            .SetName("GreaterThan (int)");
+        
+        // GreaterThanOrEqualTo
+        yield return new TestCaseData(
+                config.Clauses.GreaterThanOrEqualTo.IntTest, 
+                (Func<IOperatorStep, int, Clause>)((step, value) => step.GreaterThanOrEqualTo(value)))
+            .SetName("GreaterThanOrEqualTo (int)");
+        
+        // LessThan
+        yield return new TestCaseData(
+                config.Clauses.LessThan.IntTest, 
+                (Func<IOperatorStep, int, Clause>)((step, value) => step.LessThan(value)))
+            .SetName("LessThan (int)");
+        
+        // LessThanOrEqualTo
+        yield return new TestCaseData(
+                config.Clauses.LessThanOrEqualTo.IntTest, 
+                (Func<IOperatorStep, int, Clause>)((step, value) => step.LessThanOrEqualTo(value)))
+            .SetName("LessThanOrEqualTo (int)");
+    }
+
+    private static IEnumerable<TestCaseData> DoubleClauseTestCases()
+    {
+        TestConfig config = AssemblySetup.TestConfig;
+        
+        // EqualTo
+        yield return new TestCaseData(
+                config.Clauses.EqualTo.DoubleTest,
+                (Func<IOperatorStep, double, Clause>)((step, value) => step.EqualTo(value)))
+            .SetName("EqualTo (double)");
+        
+        // GreaterThan
+        yield return new TestCaseData(
+                config.Clauses.GreaterThan.IntTest, 
+                (Func<IOperatorStep, double, Clause>)((step, value) => step.GreaterThan(value)))
+            .SetName("GreaterThan (double)");
+        
+        // GreaterThanOrEqualTo
+        yield return new TestCaseData(
+                config.Clauses.GreaterThanOrEqualTo.IntTest, 
+                (Func<IOperatorStep, double, Clause>)((step, value) => step.GreaterThanOrEqualTo(value)))
+            .SetName("GreaterThanOrEqualTo (double)");
+        
+        // LessThan
+        yield return new TestCaseData(
+                config.Clauses.LessThan.IntTest, 
+                (Func<IOperatorStep, double, Clause>)((step, value) => step.LessThan(value)))
+            .SetName("LessThan (double)");
+        
+        // LessThanOrEqualTo
+        yield return new TestCaseData(
+                config.Clauses.LessThanOrEqualTo.IntTest, 
+                (Func<IOperatorStep, double, Clause>)((step, value) => step.LessThanOrEqualTo(value)))
+            .SetName("LessThanOrEqualTo (double)");
+    }
+    
+    private static IEnumerable<TestCaseData> DecimalClauseTestCases()
+    {
+        TestConfig config = AssemblySetup.TestConfig;
+
+        // EqualTo
+        yield return new TestCaseData(
+                config.Clauses.EqualTo.DecimalTest, 
+                (Func<IOperatorStep, decimal, Clause>)((step, value) => step.EqualTo(value)))
+            .SetName("EqualTo (decimal)");
+        
+        // GreaterThan
+        yield return new TestCaseData(
+                config.Clauses.GreaterThan.IntTest, 
+                (Func<IOperatorStep, decimal, Clause>)((step, value) => step.GreaterThan(value)))
+            .SetName("GreaterThan (decimal)");
+        
+        // GreaterThanOrEqualTo
+        yield return new TestCaseData(
+                config.Clauses.GreaterThanOrEqualTo.IntTest, 
+                (Func<IOperatorStep, decimal, Clause>)((step, value) => step.GreaterThanOrEqualTo(value)))
+            .SetName("GreaterThanOrEqualTo (decimal)");
+        
+        // LessThan
+        yield return new TestCaseData(
+                config.Clauses.LessThan.IntTest, 
+                (Func<IOperatorStep, int, Clause>)((step, value) => step.LessThan(value)))
+            .SetName("LessThan (int)");
+        
+        // LessThanOrEqualTo
+        yield return new TestCaseData(
+                config.Clauses.LessThanOrEqualTo.IntTest, 
+                (Func<IOperatorStep, decimal, Clause>)((step, value) => step.LessThanOrEqualTo(value)))
+            .SetName("LessThanOrEqualTo (decimal)");
+    }
+
+    [TestCaseSource(nameof(StringClauseTestCases))]
+    public void NewClause_BuildsStringCorrectly(
+        StringClauseTestType opts,
+        Func<IOperatorStep, string, Clause> buildClause)
+    {
+        Clause clause = buildClause(
+            XivApiService.NewClause()
+                .WhereSpecifier(opts.Specifier)
+                .Is(), 
+            opts.Value);
+        
+        Assert.That(clause.ToString(), 
+            Is.EqualTo(opts.ExpectedValue));
+    }
+
+    [TestCaseSource(nameof(BoolClauseTestCases))]
+    public void NewClause_BuildsBoolCorrectly(
+        BoolClauseTestType opts,
+        Func<IOperatorStep, bool, Clause> buildClause)
+    {
+        Clause clause = buildClause(
+            XivApiService.NewClause()
+                .WhereSpecifier(opts.Specifier)
+                .Is(), opts.Value);
+        
+        Assert.That(clause.ToString(),
+            Is.EqualTo(opts.ExpectedValue));
+    }
+
+    [TestCaseSource(nameof(IntClauseTestCases))]
+    public void NewClause_BuildsNumberCorrectly(
+        IntClauseTestType opts,
+        Func<IOperatorStep, int, Clause> buildClause)
+    {
+        Clause clause = buildClause(
+            XivApiService.NewClause()
+                .WhereSpecifier(opts.Specifier)
+                .Is(), opts.Value);
+        
+        Assert.That(clause.ToString(),
+            Is.EqualTo(opts.ExpectedValue));
+    }
+
+    [TestCaseSource(nameof(DoubleClauseTestCases))]
+    public void NewClause_BuildsDoubleCorrectly(
+        DoubleClauseTestType opts,
+        Func<IOperatorStep, double, Clause> buildClause)
+    {
+        Clause clause = buildClause(
+            XivApiService.NewClause()
+                .WhereSpecifier(opts.Specifier)
+                .Is(), opts.Value);
+        
+        Assert.That(clause.ToString(),
+            Is.EqualTo(opts.ExpectedValue));
+    }    
+    
+    [TestCaseSource(nameof(DecimalClauseTestCases))]
+    public void NewClause_BuildsDecimalCorrectly(
+        DecimalClauseTestType opts,
+        Func<IOperatorStep, decimal, Clause> buildClause)
+    {
+        Clause clause = buildClause(
+            XivApiService.NewClause()
+                .WhereSpecifier(opts.Specifier)
+                .Is(), opts.Value);
+        
+        Assert.That(clause.ToString(),
+            Is.EqualTo(opts.ExpectedValue));
+    }
+    
+    
+}
