@@ -14,7 +14,7 @@ public class Clause<T> : IClause where T : notnull
     /// <summary>
     /// See: <see cref="IClause.Value"/>
     /// </summary>
-    public virtual T? Value { get; set; }
+    public T? Value { get; set; }
 
     /// <inheritdoc />
     object? IClause.Value
