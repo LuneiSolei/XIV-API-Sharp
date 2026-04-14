@@ -1,3 +1,4 @@
+using XivApiSharp.Client.Core.Clauses.Interfaces;
 using XivApiSharp.Client.Core.Enums;
 
 namespace XivApiSharp.Client.Core.Clauses;

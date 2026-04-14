@@ -1,3 +1,5 @@
+using XivApiSharp.Client.Core.Clauses.Interfaces;
+
 namespace XivApiSharp.Client.Core.Clauses;
 
 public class Clause<T> : IClause

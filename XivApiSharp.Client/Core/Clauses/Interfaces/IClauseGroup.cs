@@ -1,4 +1,4 @@
-namespace XivApiSharp.Client.Core.Clauses;
+namespace XivApiSharp.Client.Core.Clauses.Interfaces;
 
 public interface IClauseGroup
 {
