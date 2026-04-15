@@ -1,11 +1,11 @@
 namespace XivApiSharp.Client.Core.Clauses;
 
 // TODO: Implement
-public class ClauseGroup(ClauseGroupOperator? groupOperator) : IClauseGroup
+public class ClauseGroup(ClauseGroupOperators? groupOperator) : IClauseGroup
 {
     private List<IClause> Clauses { get; }
-    private ClauseGroupOperator Operator { get; } = 
-        groupOperator ?? ClauseGroupOperator.Or;
+    private ClauseGroupOperators Operators { get; } = 
+        groupOperator ?? ClauseGroupOperators.Or;
 
     public override string ToString()
     {
@@ -14,11 +14,11 @@ public class ClauseGroup(ClauseGroupOperator? groupOperator) : IClauseGroup
 
     private string GenerateOperator()
     {
-        return Operator switch
+        return Operators switch
         {
-            ClauseGroupOperator.Or => string.Empty,
-            ClauseGroupOperator.Must => "+",
-            ClauseGroupOperator.MustNot => "-",
+            ClauseGroupOperators.Or => string.Empty,
+            ClauseGroupOperators.Must => "+",
+            ClauseGroupOperators.MustNot => "-",
             _ => string.Empty
         };
     }
