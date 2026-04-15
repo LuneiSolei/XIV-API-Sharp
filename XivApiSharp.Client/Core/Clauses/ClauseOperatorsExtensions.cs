@@ -7,7 +7,7 @@ public static class ClauseOperatorsExtensions
 {
     extension(ClauseOperators op)
     {
-        public string ToStringOperator()
+        public string Stringify()
         {
             return op switch
             {

@@ -127,5 +127,5 @@ public class ClauseBuilder : IInitialClauseBuilderStep, IConditionStep,
     }
 
     private void AddClauseOperator<T>(Clause<T> clause) =>
-        clause.Operator = _operator.ToStringOperator();
+        clause.Operator = _operator.Stringify();
 }
