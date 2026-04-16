@@ -21,11 +21,6 @@ internal interface IClause
     string? Operator { get; set; }
     
     /// <summary>
-    /// The boxed value to compare.
-    /// </summary>
-    object? Value { get; set; }
-    
-    /// <summary>
     /// Converts the specifier, operator, and value of this instance into its
     /// string representation.
     /// </summary>
