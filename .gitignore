@@ -12,6 +12,7 @@
 
 # Rider
 .idea/
+.idea/indexLayout.xml
 *.sln.DotSettings.user
 *.DotSettings.user
 
