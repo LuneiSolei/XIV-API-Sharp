@@ -1,4 +1,4 @@
-namespace XivApiSharp.Client.Infrastructure.Requests.Clauses.Steps;
+namespace XivApiSharp.Client.Infrastructure.Clauses.Steps;
 
 public interface IInitialClauseBuilderStep
 {

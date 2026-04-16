@@ -2,9 +2,9 @@ using System.Numerics;
 using System.Web;
 using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Extensions;
-using XivApiSharp.Client.Infrastructure.Requests.Clauses.Steps;
+using XivApiSharp.Client.Infrastructure.Clauses.Steps;
 
-namespace XivApiSharp.Client.Infrastructure.Requests.Clauses;
+namespace XivApiSharp.Client.Infrastructure.Clauses;
 
 /// <summary>
 /// Builds the specific query parameter used by XIV API in the url string.

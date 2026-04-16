@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Options;
 using XivApiSharp.Client.Core.Options;
+using XivApiSharp.Client.Infrastructure.Clauses;
+using XivApiSharp.Client.Infrastructure.Clauses.Steps;
 using XivApiSharp.Client.Infrastructure.Requests;
-using XivApiSharp.Client.Infrastructure.Requests.Clauses;
-using XivApiSharp.Client.Infrastructure.Requests.Clauses.Steps;
 
 namespace XivApiSharp.Client.Services;
 
