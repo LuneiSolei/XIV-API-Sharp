@@ -3,11 +3,36 @@ using XivApiSharp.Client.Core.Clauses;
 namespace XivApiSharp.Client.Core;
 
 /// <summary>
-/// Represents the query parameter used when making certain calls to the API.
+/// A string used for searching data in the XIV API. 
 /// </summary>
+/// 
+/// <remarks>
+/// <para>
+///     QueryStrings are formed from one (1) or more <see cref="Clause{T}">Clause&lt;T&gt;</see> and/or <see cref="ClauseGroup"/>
+///     instances.
+/// </para>
+/// 
+/// <para>
+///     <b>Note</b>: In XivApiSharp, "QueryString" refers specifically to the parameter named "query" and <b>NOT</b> the
+///     traditional URL query string.
+/// </para>
+/// <para>
+///     *Based on the XIV API model <see href="https://v2.xivapi.com/api/docs#model/QueryString">QueryString</see> documentation.
+/// </para>
+/// </remarks>
+/// 
+/// <seealso cref="Clause{T}">Clause&lt;T&gt;</seealso>
+/// <seealso cref="ClauseGroup"/>
 public record QueryString
 {
+    /// <summary>
+    /// A collection of <see cref="ClauseGroups"/>.
+    /// </summary>
     private List<IClauseGroup> ClauseGroups { get; } = [];
+    
+    /// <summary>
+    /// A collection of single instances of <see cref="Clause{T}">Clause&lt;T&gt;</see>.
+    /// </summary>
     private List<IClause> Clauses { get; } = [];
 
     /// <summary>
