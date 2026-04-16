@@ -1,4 +1,6 @@
-﻿using XivApiSharp.Client.Core.Clauses;
+﻿using Microsoft.Extensions.DependencyInjection;
+using XivApiSharp.Client.Core.Clauses;
+using XivApiSharp.Client.Infrastructure.Clauses;
 using XivApiSharp.Client.Infrastructure.Clauses.Steps;
 using XivApiSharp.Client.Services;
 using XivApiSharp.Tests.Options;
@@ -11,7 +13,7 @@ public class ClauseTests
 {
     private static IEnumerable<TestCaseData> StringClauseTestCases()
     {
-        TestConfig config = ConfigSetup.TestConfig;
+        TestConfig config = TestsSetup.TestConfig;
         
         // EqualTo
         yield return new TestCaseData(
@@ -28,7 +30,7 @@ public class ClauseTests
     
     private static IEnumerable<TestCaseData> BoolClauseTestCases()
     {
-        TestConfig config = ConfigSetup.TestConfig;
+        TestConfig config = TestsSetup.TestConfig;
         
         // EqualTo
         yield return new TestCaseData(
@@ -39,7 +41,7 @@ public class ClauseTests
 
     private static IEnumerable<TestCaseData> IntClauseTestCases()
     {
-        TestConfig config = ConfigSetup.TestConfig;
+        TestConfig config = TestsSetup.TestConfig;
         
         // EqualTo
         yield return new TestCaseData(
@@ -74,7 +76,7 @@ public class ClauseTests
 
     private static IEnumerable<TestCaseData> DoubleClauseTestCases()
     {
-        TestConfig config = ConfigSetup.TestConfig;
+        TestConfig config = TestsSetup.TestConfig;
         
         // EqualTo
         yield return new TestCaseData(
@@ -109,7 +111,7 @@ public class ClauseTests
     
     private static IEnumerable<TestCaseData> DecimalClauseTestCases()
     {
-        TestConfig config = ConfigSetup.TestConfig;
+        TestConfig config = TestsSetup.TestConfig;
 
         // EqualTo
         yield return new TestCaseData(
@@ -147,11 +149,11 @@ public class ClauseTests
         StringClauseTestType opts,
         Func<IOperatorStep, string, IClause> buildClause)
     {
-        IClause clause = buildClause(
-            XivApiService.NewClause()
-                .WhereSpecifier(opts.Specifier)
-                .MustBe, 
-            opts.Value);
+        IClauseBuilder builder = TestsSetup.ServiceProvider
+            .GetRequiredService<IClauseBuilder>();
+        
+        IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
+                .MustBe, opts.Value);
         
         Assert.That(clause.ToString(), 
             Is.EqualTo(opts.ExpectedValue));
@@ -162,9 +164,10 @@ public class ClauseTests
         BoolClauseTestType opts,
         Func<IOperatorStep, bool, IClause> buildClause)
     {
-        IClause clause = buildClause(
-            XivApiService.NewClause()
-                .WhereSpecifier(opts.Specifier)
+        IClauseBuilder builder = TestsSetup.ServiceProvider
+            .GetRequiredService<IClauseBuilder>();
+        
+        IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
         
         Assert.That(clause.ToString(),
@@ -176,9 +179,10 @@ public class ClauseTests
         IntClauseTestType opts,
         Func<IOperatorStep, int, IClause> buildClause)
     {
-        IClause clause = buildClause(
-            XivApiService.NewClause()
-                .WhereSpecifier(opts.Specifier)
+        IClauseBuilder builder = TestsSetup.ServiceProvider
+            .GetRequiredService<IClauseBuilder>();
+        
+        IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
         
         Assert.That(clause.ToString(),
@@ -190,9 +194,10 @@ public class ClauseTests
         DoubleClauseTestType opts,
         Func<IOperatorStep, double, IClause> buildClause)
     {
-        IClause clause = buildClause(
-            XivApiService.NewClause()
-                .WhereSpecifier(opts.Specifier)
+        IClauseBuilder builder = TestsSetup.ServiceProvider
+            .GetRequiredService<IClauseBuilder>();
+        
+        IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
         
         Assert.That(clause.ToString(),
@@ -204,11 +209,11 @@ public class ClauseTests
         DecimalClauseTestType opts,
         Func<IOperatorStep, decimal, IClause> buildClause)
     {
-        IClause clause = buildClause(
-            XivApiService.NewClause()
-                .WhereSpecifier(opts.Specifier)
+        IClauseBuilder builder = TestsSetup.ServiceProvider
+            .GetRequiredService<IClauseBuilder>();
+        
+        IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
-        Console.WriteLine();
         
         Assert.That(clause.ToString(),
             Is.EqualTo(opts.ExpectedValue));

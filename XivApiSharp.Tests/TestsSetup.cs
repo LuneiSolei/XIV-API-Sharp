@@ -1,15 +1,26 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using XivApiSharp.Client.Services;
 using XivApiSharp.Tests.Options;
 
 namespace XivApiSharp.Tests;
 
 [SetUpFixture]
-public class ConfigSetup
+public class TestsSetup
 {
     public static TestConfig TestConfig { get; } = new();
+    public readonly static IServiceProvider ServiceProvider;
 
-    static ConfigSetup()
+    static TestsSetup()
+    {
+        ConfigureOptions();
+        ServiceProvider = new ServiceCollection()
+            .AddXivApiService()
+            .BuildServiceProvider();
+    }
+
+    private static void ConfigureOptions()
     {
         IConfiguration config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
@@ -25,7 +36,7 @@ public class ConfigSetup
             new ValidationContext(TestConfig),
             validationResults,
             validateAllProperties: true);
-
+        
         if (isValid) return;
         
         string errors = string.Join(", ", validationResults.Select(r => r.ErrorMessage));
