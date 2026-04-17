@@ -9,12 +9,18 @@ namespace XivApiSharp.Client.Infrastructure.Clauses;
 /// <seealso cref="IClause"/>
 public sealed class ClauseBuilder : IClauseBuilder
 {
+    private readonly IClauseFactory _factory;
+
     /// <summary>
-    /// Creates a new instance of ClauseBuilder(). 
+    /// Creates new instance with an injected IClauseFactory.
     /// </summary>
-    public ClauseBuilder() {}
+    /// <param name="factory">The factory instance for the builder to use.</param>
+    internal ClauseBuilder(IClauseFactory factory)
+    {
+        _factory = factory;
+    }
 
     /// <inheritdoc/>
     public IWhereSpecifier WhereSpecifier(string name) => 
-        new WhereSpecifier(name);
+        new WhereSpecifier(name, _factory);
 }

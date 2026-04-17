@@ -3,7 +3,8 @@ using XivApiSharp.Client.Core.Clauses;
 namespace XivApiSharp.Client.Infrastructure.Clauses;
 
 /// <inheritdoc/>
-internal sealed class WhereSpecifier(string specifier) : IWhereSpecifier
+internal sealed class WhereSpecifier(string specifier, 
+    IClauseFactory clauseFactory) : IWhereSpecifier
 {
     /// <summary>
     /// The name of the specifier to be compared.
@@ -13,13 +14,14 @@ internal sealed class WhereSpecifier(string specifier) : IWhereSpecifier
     /// <inheritdoc/>
     public IWithConditional MustBe
     {
-        get => new WithConditional(_specifier, ClauseConditionals.MustBe);
+        get => new WithConditional(_specifier, 
+            ClauseConditionals.MustBe, clauseFactory);
     }
 
     /// <inheritdoc/>
     public IWithConditional MustNotBe
     {
         get => new WithConditional(_specifier, 
-            ClauseConditionals.MustNotBe);
+            ClauseConditionals.MustNotBe, clauseFactory);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using XivApiSharp.Client.Core.Clauses;
+﻿using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Tests.Options;
 using XivApiSharp.Tests.Options.ClauseConfigs.ClauseTestTypes;
 
@@ -146,8 +145,7 @@ public class ClauseTests
         StringClauseTestType opts,
         Func<IWithConditional, string, IClause> buildClause)
     {
-        IClauseBuilder builder = TestsSetup.ServiceProvider
-            .GetRequiredService<IClauseBuilder>();
+        IClauseBuilder builder = TestsSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
@@ -161,8 +159,7 @@ public class ClauseTests
         BoolClauseTestType opts,
         Func<IWithConditional, bool, IClause> buildClause)
     {
-        IClauseBuilder builder = TestsSetup.ServiceProvider
-            .GetRequiredService<IClauseBuilder>();
+        IClauseBuilder builder = TestsSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
@@ -176,8 +173,7 @@ public class ClauseTests
         IntClauseTestType opts,
         Func<IWithConditional, int, IClause> buildClause)
     {
-        IClauseBuilder builder = TestsSetup.ServiceProvider
-            .GetRequiredService<IClauseBuilder>();
+        IClauseBuilder builder = TestsSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
@@ -191,8 +187,7 @@ public class ClauseTests
         DoubleClauseTestType opts,
         Func<IWithConditional, double, IClause> buildClause)
     {
-        IClauseBuilder builder = TestsSetup.ServiceProvider
-            .GetRequiredService<IClauseBuilder>();
+        IClauseBuilder builder = TestsSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);
@@ -206,8 +201,7 @@ public class ClauseTests
         DecimalClauseTestType opts,
         Func<IWithConditional, decimal, IClause> buildClause)
     {
-        IClauseBuilder builder = TestsSetup.ServiceProvider
-            .GetRequiredService<IClauseBuilder>();
+        IClauseBuilder builder = TestsSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
                 .MustBe, opts.Value);

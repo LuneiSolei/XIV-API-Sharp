@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using XivApiSharp.Client.Core;
 using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Options;
 using XivApiSharp.Client.Infrastructure.Clauses;
@@ -35,23 +36,15 @@ public static class ServiceCollectionExtensions
         private void BuildConfig()
         {
             ConfigurationBuilder builder = new();
+            Assembly assembly = typeof(ServiceCollectionExtensions).Assembly;
+            string? resourceName = assembly.GetManifestResourceNames()
+                .FirstOrDefault(n => n.EndsWith(FileName, StringComparison.OrdinalIgnoreCase));
 
-            if (File.Exists(FileName))
+            if (resourceName is not null)
             {
-                builder.AddJsonFile(FileName, optional: true, reloadOnChange: true);
-            }
-            else
-            {
-                Assembly assembly = typeof(ServiceCollectionExtensions).Assembly;
-                string? resourceName = assembly.GetManifestResourceNames()
-                    .FirstOrDefault(n => n.EndsWith(FileName, StringComparison.OrdinalIgnoreCase));
-
-                if (resourceName is not null)
-                {
-                    Stream stream = assembly.GetManifestResourceStream(resourceName)
-                                    ?? throw new FileNotFoundException($"Embedded resource '{resourceName}' not found.");
-                    builder.AddJsonStream(stream);
-                }
+                Stream stream = assembly.GetManifestResourceStream(resourceName)
+                                ?? throw new FileNotFoundException($"Embedded resource '{resourceName}' not found.");
+                builder.AddJsonStream(stream);
             }
             
             // Load default values from appsettings.json
@@ -60,21 +53,30 @@ public static class ServiceCollectionExtensions
 
         private void RegisterCommon()
         {
-            services.Configure<XivApiOptions>(_config.GetSection("XivApiOptions"));
-            services.AddSingleton(sp => sp.GetRequiredService<IOptions<XivApiOptions>>().Value);
-            services.ConfigureHttpClient();
-            services.AddTransient<IClauseBuilder, ClauseBuilder>();
-        }
-        
-        private void ConfigureHttpClient()
-        {
-            services.AddHttpClient<XivApiService>((sp, client) =>
-            {
-                XivApiOptions opts = sp.GetRequiredService<IOptions<XivApiOptions>>().Value;
-                client.BaseAddress = new Uri(opts.BaseUrl);
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-            });
+            services
+                // Configure options
+                .Configure<XivApiOptions>(_config.GetSection("XivApiOptions"))
+                
+                // Add HttpClient 
+                .AddHttpClient<XivApiService>((sp, client) =>
+                {
+                    XivApiOptions opts = sp
+                        .GetRequiredService<IOptions<XivApiOptions>>().Value;
+                    
+                    client.BaseAddress = new Uri($"{opts.Scheme}://{opts.BaseUrl}");
+                    client.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue("application/json"));
+                })
+                .Services
+                    
+                // Inject dependencies
+                .AddScoped<IClauseFactory, ClauseFactory>()
+                .AddScoped<IInternalInstances, InternalInstances>(sp =>
+                {
+                    IClauseFactory clauseFactory = sp.GetRequiredService<IClauseFactory>();
+                    return new InternalInstances(clauseFactory);
+                })
+                .AddScoped<IClauseBuilder, ClauseBuilder>();
         }
     }
 }

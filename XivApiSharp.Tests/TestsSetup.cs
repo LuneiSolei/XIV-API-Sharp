@@ -7,17 +7,18 @@ using XivApiSharp.Tests.Options;
 namespace XivApiSharp.Tests;
 
 [SetUpFixture]
-public class TestsSetup
+internal class TestsSetup
 {
-    public static TestConfig TestConfig { get; } = new();
-    public readonly static IServiceProvider ServiceProvider;
+    internal static TestConfig TestConfig { get; } = new();
+    internal readonly static XivApiService ApiService;
 
     static TestsSetup()
     {
         ConfigureOptions();
-        ServiceProvider = new ServiceCollection()
+        IServiceProvider serviceProvider = new ServiceCollection()
             .AddXivApiService()
             .BuildServiceProvider();
+        ApiService = serviceProvider.GetRequiredService<XivApiService>();
     }
 
     private static void ConfigureOptions()

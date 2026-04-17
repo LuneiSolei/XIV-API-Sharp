@@ -1,14 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
-using System.Web;
 using XivApiSharp.Client.Core.Clauses;
-using XivApiSharp.Client.Core.Extensions;
 
 namespace XivApiSharp.Client.Infrastructure.Clauses;
 
 /// <inheritdoc/>
 [SuppressMessage("Performance", "CA1859:Use concrete types when possible for improved performance")]
-internal sealed class WithConditional(string specifier, ClauseConditionals condition) : IWithConditional
+internal sealed class WithConditional(string specifier, 
+    ClauseConditionals condition, IClauseFactory clauseFactory) 
+    : IWithConditional
 {
     /// <summary>
     /// The name of the specifier to be compared.
@@ -70,12 +70,11 @@ internal sealed class WithConditional(string specifier, ClauseConditionals condi
     /// <seealso cref="ClauseOperators"/>
     /// <seealso cref="IClause"/>
 
-    private Clause<T> BuildClause<T>(ClauseOperators op, T value) where T : notnull
+    private IClause BuildClause<T>(ClauseOperators op, T value) where T : notnull
     {
-        Clause<T> clause = BuildCommon<T>(op);
-        clause.Value = value;
+        IClause newClause = clauseFactory.CreateClause(_specifier, op, value);
 
-        return clause;
+        return newClause;
     }
 
     /// <summary>
@@ -87,40 +86,35 @@ internal sealed class WithConditional(string specifier, ClauseConditionals condi
     /// <returns>A fully constructed clause.</returns>
     /// <seealso cref="ClauseOperators"/>
     /// <seealso cref="IClause"/>
-    private Clause<string> BuildClause(ClauseOperators op, string value)
-    {
-        Clause<string> clause = BuildCommon<string>(op);
-        clause.Value = $"\"{HttpUtility.UrlEncode(value)}\"";
-
-        return clause;
-    }
+    // private Clause<string> BuildClause(ClauseOperators op, string value)
+    // {
+    //     Clause<string> clause = BuildCommon<string>(op);
+    //     clause.Value = $"\"{HttpUtility.UrlEncode(value)}\"";
+    //
+    //     return clause;
+    // }
 
     /// <summary>
     /// Assigns the provided operator and the builder's stored specifier
     /// to the clause.
     /// </summary>
     /// <param name="op">The comparison operator to use for the clause.</param>
+    /// <param name="value">The value to be compared.</param>
     /// <typeparam name="T">The type of the clause value.</typeparam>
     /// <returns>A partially constructed clause.</returns>
     /// <seealso cref="ClauseOperators"/>
     /// <seealso cref="IClause"/>
-    private Clause<T> BuildCommon<T>(ClauseOperators op) where T : notnull
-    {
-        _operator = op;
-        Clause<T> baseClause = new();
-        
-        AddClauseSpecifier(baseClause);
-        AddClauseOperator(baseClause);
-
-        return baseClause;
-    }
+    // private IClause BuildCommon<T>(ClauseOperators op, T value) where T : notnull
+    // {
+    //
+    // }
     
     /// <summary>
     /// Adds the builder's stored specifier to the clause.
     /// </summary>
     /// <param name="clause">The clause to add the specifier to.</param>
     /// <seealso cref="IClause"/>
-    private void AddClauseSpecifier(IClause clause)
+    private void AddSpecifier(IClause clause)
     {
         string specifier = _condition == ClauseConditionals.MustBe
             ? string.Empty
@@ -137,6 +131,6 @@ internal sealed class WithConditional(string specifier, ClauseConditionals condi
     /// <typeparam name="T">The type of the clause value.</typeparam>
     /// <seealso cref="ClauseOperators"/>
     /// <seealso cref="IClause"/>
-    private void AddClauseOperator<T>(Clause<T> clause) where T : notnull =>
-        clause.Operator = _operator.Stringify();
+    private void AddOperator(IClause clause) =>
+        clause.Operator = _operator;
 }
