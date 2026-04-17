@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using XivApiSharp.Client.Core;
 using XivApiSharp.Client.Core.Clauses;
+using XivApiSharp.Client.Core.InternalDependencies;
 using XivApiSharp.Client.Core.Options;
 using XivApiSharp.Client.Infrastructure.Clauses;
 

@@ -1,6 +1,6 @@
 using XivApiSharp.Client.Core.Clauses;
 
-namespace XivApiSharp.Client.Core;
+namespace XivApiSharp.Client.Core.InternalDependencies;
 
 /// <summary>
 /// Represents a type that provides internal dependencies for XivApiService.
@@ -11,5 +11,4 @@ public interface IInternalDependencies
     /// An internal instance of ClauseFactory used by XivApiService.
     /// </summary>
     internal IClauseFactory ClauseFactory { get; }
-    
 }

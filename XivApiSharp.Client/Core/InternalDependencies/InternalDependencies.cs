@@ -1,6 +1,6 @@
 using XivApiSharp.Client.Core.Clauses;
 
-namespace XivApiSharp.Client.Core;
+namespace XivApiSharp.Client.Core.InternalDependencies;
 
 /// <inheritdoc/>
 internal class InternalDependencies(IClauseFactory clauseFactory) : IInternalDependencies
