@@ -76,38 +76,6 @@ internal sealed class WithConditional(string specifier,
 
         return newClause;
     }
-
-    /// <summary>
-    /// Builds a clause by assigning the specified operator and
-    /// <paramref name="value"/> to the clause.
-    /// </summary>
-    /// <param name="op">The comparison operator to use for the clause.</param>
-    /// <param name="value">The value to compare against.</param>
-    /// <returns>A fully constructed clause.</returns>
-    /// <seealso cref="ClauseOperators"/>
-    /// <seealso cref="IClause"/>
-    // private Clause<string> BuildClause(ClauseOperators op, string value)
-    // {
-    //     Clause<string> clause = BuildCommon<string>(op);
-    //     clause.Value = $"\"{HttpUtility.UrlEncode(value)}\"";
-    //
-    //     return clause;
-    // }
-
-    /// <summary>
-    /// Assigns the provided operator and the builder's stored specifier
-    /// to the clause.
-    /// </summary>
-    /// <param name="op">The comparison operator to use for the clause.</param>
-    /// <param name="value">The value to be compared.</param>
-    /// <typeparam name="T">The type of the clause value.</typeparam>
-    /// <returns>A partially constructed clause.</returns>
-    /// <seealso cref="ClauseOperators"/>
-    /// <seealso cref="IClause"/>
-    // private IClause BuildCommon<T>(ClauseOperators op, T value) where T : notnull
-    // {
-    //
-    // }
     
     /// <summary>
     /// Adds the builder's stored specifier to the clause.
