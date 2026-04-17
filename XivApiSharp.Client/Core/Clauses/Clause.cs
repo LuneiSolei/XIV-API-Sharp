@@ -1,4 +1,3 @@
-using System.Numerics;
 using System.Web;
 using XivApiSharp.Client.Core.Extensions;
 
