@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using XivApiSharp.Client.Application.Clauses;
+using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Tests.Options;
 using XivApiSharp.Tests.Options.ClauseConfigs.ClauseTestTypes;
 

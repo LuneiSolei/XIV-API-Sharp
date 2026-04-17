@@ -1,4 +1,4 @@
-namespace XivApiSharp.Client.Application.Clauses;
+namespace XivApiSharp.Client.Core.Clauses;
 
 /// <summary>
 /// Represents a type that is used as a clause as defined by the XIV API

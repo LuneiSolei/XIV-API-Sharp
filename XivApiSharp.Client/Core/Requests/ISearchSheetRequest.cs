@@ -1,4 +1,4 @@
-using XivApiSharp.Client.Application.Clauses;
+using XivApiSharp.Client.Core.Clauses;
 
 namespace XivApiSharp.Client.Core.Requests;
 

@@ -1,8 +1,6 @@
 using System.Numerics;
-using XivApiSharp.Client.Core;
-using XivApiSharp.Client.Core.Clauses;
 
-namespace XivApiSharp.Client.Application.Clauses;
+namespace XivApiSharp.Client.Core.Clauses;
 
 /// <summary>
 /// Defines methods for adding comparison operators to a clause.

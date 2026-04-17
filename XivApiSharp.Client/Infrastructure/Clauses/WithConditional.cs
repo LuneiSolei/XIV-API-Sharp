@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Web;
-using XivApiSharp.Client.Application.Clauses;
 using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Extensions;
 

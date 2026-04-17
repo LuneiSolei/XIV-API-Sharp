@@ -1,6 +1,4 @@
-using XivApiSharp.Client.Core.Clauses;
-
-namespace XivApiSharp.Client.Application.Clauses;
+namespace XivApiSharp.Client.Core.Clauses;
 
 /// <summary>
 /// Defines properties for a ClauseBuilder that determine the boolean state of
