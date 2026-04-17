@@ -6,8 +6,22 @@ namespace XivApiSharp.Client.Core.Clauses;
 /// <inheritdoc />
 internal sealed class Clause<T> : IClause where T : notnull
 {
+    /// <summary>
+    /// Main constructor for clause.
+    /// </summary>
+    /// <param name="specifier">The specifier to be compared against.</param>
+    /// <param name="op">The comparison operator to perform.</param>
+    /// <param name="value">The value to be compared.</param>
+    /// <seealso cref="IClause"/>
+    public Clause(string specifier, ClauseOperators op, T value)
+    {
+        Specifier = specifier;
+        Operator = op;
+        Value = value;
+    }
+    
     /// <inheritdoc />
-    public string? Specifier { get; set; }
+    public string Specifier { get; set; }
 
     /// <inheritdoc />
     public ClauseOperators Operator { get; set; }
@@ -15,7 +29,7 @@ internal sealed class Clause<T> : IClause where T : notnull
     /// <summary>
     /// The value of clause to be compared.
     /// </summary>
-    public T? Value
+    public T Value
     {
         get;
         init
@@ -24,10 +38,10 @@ internal sealed class Clause<T> : IClause where T : notnull
             {
                 string encoded = $"\"{HttpUtility.UrlEncode(s)}\"";
                 field = (T)(object)encoded;
-                
+
                 return;
             }
-            
+
             field = value;
         }
     }

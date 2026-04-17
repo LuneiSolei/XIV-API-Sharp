@@ -7,8 +7,7 @@ internal class ClauseFactory : IClauseFactory
     IClause IClauseFactory.CreateClause<T>(string specifier, ClauseOperators op,
         T value)
     {
-        Clause<T> clause = new() { Specifier = specifier, 
-            Operator = op, Value = value };
+        Clause<T> clause = new(specifier, op, value);
         
         return clause;
     }
