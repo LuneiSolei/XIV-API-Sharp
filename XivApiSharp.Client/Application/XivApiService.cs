@@ -25,8 +25,8 @@ public class XivApiService
     /// This pattern ensures that internal dependencies are encapsulated and not
     /// exposed directly to users.
     /// </remarks>
-    /// <seealso cref="IInternalInstances"/>
-    private readonly IInternalInstances _internalInstances;
+    /// <seealso cref="IInternalDependencies"/>
+    private readonly IInternalDependencies _internalDependencies;
 
     /// <summary>
     /// Constructor for XivApiService.
@@ -38,13 +38,13 @@ public class XivApiService
     /// <param name="_client">
     /// The HttpClient used for making requests.
     /// </param>
-    /// <param name="internalInstances">
+    /// <param name="internalDependencies">
     /// The dependencies required by XivApiService.
     /// </param>
-    public XivApiService(IOptions<XivApiOptions> opts, HttpClient _client, IInternalInstances internalInstances)
+    public XivApiService(IOptions<XivApiOptions> opts, HttpClient _client, IInternalDependencies internalDependencies)
     {
         _opts = opts.Value;
-        _internalInstances = internalInstances;
+        _internalDependencies = internalDependencies;
     }
 
     /// <summary>
@@ -54,5 +54,5 @@ public class XivApiService
     /// The interface for ClauseBuilder.
     /// </returns>
     /// <seealso cref="IClauseBuilder"/>
-    public IClauseBuilder NewClause() => new ClauseBuilder(_internalInstances.ClauseFactory);
+    public IClauseBuilder NewClause() => new ClauseBuilder(_internalDependencies.ClauseFactory);
 }

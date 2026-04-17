@@ -71,10 +71,10 @@ public static class ServiceCollectionExtensions
                     
                 // Inject dependencies
                 .AddScoped<IClauseFactory, ClauseFactory>()
-                .AddScoped<IInternalInstances, InternalInstances>(sp =>
+                .AddScoped<IInternalDependencies, InternalDependencies>(sp =>
                 {
                     IClauseFactory clauseFactory = sp.GetRequiredService<IClauseFactory>();
-                    return new InternalInstances(clauseFactory);
+                    return new InternalDependencies(clauseFactory);
                 })
                 .AddScoped<IClauseBuilder, ClauseBuilder>();
         }
