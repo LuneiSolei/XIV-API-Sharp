@@ -41,7 +41,7 @@ public class XivApiService
     /// <param name="internalDependencies">
     /// The dependencies required by XivApiService.
     /// </param>
-    public XivApiService(IOptions<XivApiOptions> opts, HttpClient client, IInternalDependencies internalDependencies)
+    internal XivApiService(IOptions<XivApiOptions> opts, HttpClient client, IInternalDependencies internalDependencies)
     {
         _opts = opts.Value;
         _internalDependencies = internalDependencies;

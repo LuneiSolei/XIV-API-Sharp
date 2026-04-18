@@ -1,9 +1,17 @@
 using System.ComponentModel.DataAnnotations;
+using JetBrains.Annotations;
 
 namespace XivApiSharp.Client.Core.Options;
 
-public class Endpoints
+/// <summary>
+/// Represents XivApiService options for the XIV API endpoints.
+/// </summary>
+[UsedImplicitly]
+internal sealed class Endpoints
 {
-    [Required]
+    /// <summary>
+    /// Represents the endpoint for the search sheet API.
+    /// </summary>
+    [Required(AllowEmptyStrings = false)]
     public required string Search { get; set; }
 }

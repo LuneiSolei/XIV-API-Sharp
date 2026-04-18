@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 
 namespace XivApiSharp.Client.Core.Options;
 
-public class XivApiOptions
+internal sealed class XivApiOptions
 {
     [Required, ValidateObjectMembers]
     public required string BaseUrl { get; set; }
