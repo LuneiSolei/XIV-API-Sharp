@@ -8,7 +8,8 @@ namespace XivApiSharp.Client.Core.InternalDependencies;
 public interface IInternalDependencies
 {
     /// <summary>
-    /// An internal instance of ClauseFactory used by XivApiService.
+    /// An internal instance of concrete type implementing IClauseFactory
+    /// used by XivApiService.
     /// </summary>
     internal IClauseFactory ClauseFactory { get; }
 }
