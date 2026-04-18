@@ -35,13 +35,13 @@ public class XivApiService
     /// The options configuration used to modify behavior of
     /// the XivApiService.
     /// </param>
-    /// <param name="_client">
+    /// <param name="client">
     /// The HttpClient used for making requests.
     /// </param>
     /// <param name="internalDependencies">
     /// The dependencies required by XivApiService.
     /// </param>
-    public XivApiService(IOptions<XivApiOptions> opts, HttpClient _client, IInternalDependencies internalDependencies)
+    public XivApiService(IOptions<XivApiOptions> opts, HttpClient client, IInternalDependencies internalDependencies)
     {
         _opts = opts.Value;
         _internalDependencies = internalDependencies;
