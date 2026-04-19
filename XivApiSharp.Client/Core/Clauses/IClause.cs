@@ -26,6 +26,26 @@ public interface IClause
     /// Converts the specifier, operator, and value of this instance into its
     /// string representation.
     /// </summary>
-    /// <returns>The string representation of this instance.</returns>
+    /// <remarks>
+    /// Clauses have several rules that they must follow.
+    /// <list type="number">
+    ///     <item>
+    ///     Each clause is formed from a <c>[specifier][operator][value]</c>.
+    ///     </item>
+    ///     <item>
+    ///     Multiple clauses are specified by a literal plus (+) sign.*
+    ///     </item>
+    /// </list>
+    /// <br/>
+    /// <br/>
+    /// *The official documentation states that multiple clauses are separated
+    /// by whitespace. However, experimentation has proven that this results in
+    /// undesired behavior. Using literal plus signs (+) for multipel clauses
+    /// instead of whitespace resolves this issue. By extension, use URI encoded
+    /// plus signs (%2B) when using "Must Be" decorated clauses.
+    /// </remarks>
+    /// <returns>
+    /// The string representation of this instance.
+    /// </returns>
     string ToString();
 }
