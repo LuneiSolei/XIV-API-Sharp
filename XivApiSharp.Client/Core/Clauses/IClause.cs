@@ -48,4 +48,16 @@ public interface IClause
     /// The string representation of this instance.
     /// </returns>
     string ToString();
+
+    /// <summary>
+    /// Converts this instance into its unencoded string representation.
+    /// </summary>
+    /// <remarks>
+    /// To retrieve a URI encoded version, use <see cref="ToString"/> instead.
+    /// </remarks>
+    /// <returns>
+    /// The unencoded string representation of this instance. 
+    /// </returns>
+    /// <seealso cref="ToString"/>
+    string ToStringUnencoded();
 }

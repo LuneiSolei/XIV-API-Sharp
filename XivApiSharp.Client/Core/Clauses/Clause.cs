@@ -62,4 +62,8 @@ internal sealed class Clause<T> : IClause where T : notnull
 
         return $"{specifierWithCondition}{Operator.Stringify()}{newValue}";
     }
+
+    /// <inheritdoc cref="IClause.ToStringUnencoded" />
+    public string ToStringUnencoded() =>
+        throw new NotImplementedException();
 }
