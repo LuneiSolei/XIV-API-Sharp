@@ -22,19 +22,19 @@ internal sealed class WithConditional(string specifier,
     private readonly ClauseConditionals _condition = condition;
 
     /// <inheritdoc/>
-    public IClause PartiallyEqualTo(string value) =>
+    public IClause PartiallyEqual(string value) =>
         BuildClause(ClauseOperators.PartiallyEqualTo, value);
 
     /// <inheritdoc/>
-    public IClause EqualTo(string value) =>
+    public IClause Equal(string value) =>
         BuildClause(ClauseOperators.EqualTo, value);
 
     /// <inheritdoc/>
-    public IClause EqualTo(bool value) =>
+    public IClause Equal(bool value) =>
         BuildClause(ClauseOperators.EqualTo, value);
 
     /// <inheritdoc/>
-    public IClause EqualTo<T>(T value) where T : INumber<T> =>
+    public IClause Equal<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.EqualTo, value);
 
     /// <inheritdoc/>

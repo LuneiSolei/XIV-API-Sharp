@@ -14,13 +14,13 @@ public class ClauseTests
         // EqualTo
         yield return new TestCaseData(
                 options.Clauses.EqualTo.StringTest,
-                (Func<IWithConditional, string, IClause>)((step, value) => step.EqualTo(value)))
+                (Func<IWithConditional, string, IClause>)((step, value) => step.Equal(value)))
             .SetName("EqualTo (string)");
         
         // PartiallyEqualTo
         yield return new TestCaseData(
                 options.Clauses.PartiallyEqualTo.StringTest,
-                (Func<IWithConditional, string, IClause>)((step, value) => step.PartiallyEqualTo(value)))
+                (Func<IWithConditional, string, IClause>)((step, value) => step.PartiallyEqual(value)))
             .SetName("PartiallyEqualTo (bool)");
     }
     
@@ -31,7 +31,7 @@ public class ClauseTests
         // EqualTo
         yield return new TestCaseData(
                 options.Clauses.EqualTo.BoolTest,
-                (Func<IWithConditional, bool, IClause>)((step, value) => step.EqualTo(value)))
+                (Func<IWithConditional, bool, IClause>)((step, value) => step.Equal(value)))
             .SetName("EqualTo (bool)");
     }
 
@@ -42,7 +42,7 @@ public class ClauseTests
         // EqualTo
         yield return new TestCaseData(
                 options.Clauses.EqualTo.IntTest, 
-                (Func<IWithConditional, int, IClause>)((step, value) => step.EqualTo(value)))
+                (Func<IWithConditional, int, IClause>)((step, value) => step.Equal(value)))
             .SetName("EqualTo (int)");
         
         // GreaterThan
@@ -77,7 +77,7 @@ public class ClauseTests
         // EqualTo
         yield return new TestCaseData(
                 options.Clauses.EqualTo.DoubleTest,
-                (Func<IWithConditional, double, IClause>)((step, value) => step.EqualTo(value)))
+                (Func<IWithConditional, double, IClause>)((step, value) => step.Equal(value)))
             .SetName("EqualTo (double)");
         
         // GreaterThan
@@ -112,7 +112,7 @@ public class ClauseTests
         // EqualTo
         yield return new TestCaseData(
                 options.Clauses.EqualTo.DecimalTest, 
-                (Func<IWithConditional, decimal, IClause>)((step, value) => step.EqualTo(value)))
+                (Func<IWithConditional, decimal, IClause>)((step, value) => step.Equal(value)))
             .SetName("EqualTo (decimal)");
         
         // GreaterThan

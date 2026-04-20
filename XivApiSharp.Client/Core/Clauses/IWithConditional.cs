@@ -16,7 +16,7 @@ public interface IWithConditional
     /// An individual <see cref="IClause"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
-    IClause EqualTo(string value);
+    IClause Equal(string value);
 
     /// <summary>
     /// Sets the clause to use the equal to operator (=) against the provided
@@ -27,7 +27,7 @@ public interface IWithConditional
     /// An individual <see cref="IClause"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
-    IClause EqualTo(bool value);
+    IClause Equal(bool value);
 
     /// <summary>
     /// Sets the clause to use the equal to operator (=) against the provided
@@ -42,7 +42,7 @@ public interface IWithConditional
     /// An individual <see cref="IClause"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
-    IClause EqualTo<T>(T value) where T : INumber<T>;
+    IClause Equal<T>(T value) where T : INumber<T>;
     
     /// <summary>
     /// Sets the clause to use the partial string match operator (~) against
@@ -53,7 +53,7 @@ public interface IWithConditional
     /// An individual <see cref="IClause"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
-    IClause PartiallyEqualTo(string value);
+    IClause PartiallyEqual(string value);
 
     /// <summary>
     /// Sets the clause to use the greater than operator (&gt;) against the provided value.
