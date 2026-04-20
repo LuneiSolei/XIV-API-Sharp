@@ -91,7 +91,7 @@ public static class ServiceCollectionExtensions
                 .FirstOrDefault(name => 
                     name.EndsWith(FileName, StringComparison.OrdinalIgnoreCase))
                 ?? throw new MissingManifestResourceException(
-                    $"Required manifest resource ending with {FileName}' " +
+                    $"Required manifest resource ending with '{FileName}' " +
                     $"could not be found");
 
             // From the full resource name, get the file stream
@@ -120,31 +120,33 @@ public static class ServiceCollectionExtensions
                 throw new NullReferenceException(
                     "The provided IConfiguration for XivApiService is null.");
             }
-            
+
             services
                 // Configure options
                 .Configure<XivApiOptions>(_config.GetSection("XivApiOptions"))
-                
+
+                // Inject dependencies
+                .AddScoped<IClauseFactory, ClauseFactory>()
+                .AddScoped<IClauseBuilder, ClauseBuilder>()
+                .AddScoped<IInternalDependencies, InternalDependencies>(sp =>
+                {
+                    IClauseFactory clauseFactory =
+                        sp.GetRequiredService<IClauseFactory>();
+                    return new InternalDependencies(clauseFactory);
+                })
+
                 // Add HttpClient 
                 .AddHttpClient<XivApiService>((sp, client) =>
                 {
                     XivApiOptions opts = sp
                         .GetRequiredService<IOptions<XivApiOptions>>().Value;
-                    
-                    client.BaseAddress = new Uri($"{opts.Scheme}://{opts.BaseUrl}");
+                
+                    client.BaseAddress =
+                        new Uri($"{opts.Scheme}://{opts.BaseUrl}");
                     client.DefaultRequestHeaders.Accept.Add(
-                        new MediaTypeWithQualityHeaderValue("application/json"));
-                })
-                .Services
-                    
-                // Inject dependencies
-                .AddScoped<IClauseFactory, ClauseFactory>()
-                .AddScoped<IInternalDependencies, InternalDependencies>(sp =>
-                {
-                    IClauseFactory clauseFactory = sp.GetRequiredService<IClauseFactory>();
-                    return new InternalDependencies(clauseFactory);
-                })
-                .AddScoped<IClauseBuilder, ClauseBuilder>();
+                        new MediaTypeWithQualityHeaderValue(
+                            "application/json"));
+                });
         }
     }
 }
