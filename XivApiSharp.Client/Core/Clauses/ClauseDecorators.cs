@@ -12,15 +12,20 @@ internal enum ClauseDecorators
     /// <remarks>
     /// This is the default decorator.
     /// </remarks>
+    [StringValue("")]
     May,
     
     /// <summary>
     /// Helper enum which specifies that the clause is used to include results.
     /// </summary>
+    [StringValue("+")]
     Must,
     
     /// <summary>
     /// Helper enum which specifies that the clause is used to exclude results.
     /// </summary>
+    [StringValue("-")]
     MustNot
+    
+    
 }

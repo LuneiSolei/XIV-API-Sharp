@@ -173,7 +173,7 @@ public class ClauseTests
     }
 
     [TestCaseSource(nameof(BoolClauseTestCases))]
-    public void NewClause_BuildsBoolCorrectly(
+    public void NewClause_BuildsMustBoolCorrectly(
         BoolClauseTestType opts,
         Func<IWithDecorator, bool, IClause> buildClause)
     {
@@ -187,7 +187,7 @@ public class ClauseTests
     }
 
     [TestCaseSource(nameof(IntClauseTestCases))]
-    public void NewClause_BuildsNumberCorrectly(
+    public void NewClause_BuildsMustNumberCorrectly(
         IntClauseTestType opts,
         Func<IWithDecorator, int, IClause> buildClause)
     {
@@ -201,7 +201,7 @@ public class ClauseTests
     }
 
     [TestCaseSource(nameof(DoubleClauseTestCases))]
-    public void NewClause_BuildsDoubleCorrectly(
+    public void NewClause_BuildsMustDoubleCorrectly(
         DoubleClauseTestType opts,
         Func<IWithDecorator, double, IClause> buildClause)
     {
@@ -215,7 +215,7 @@ public class ClauseTests
     }
 
     [TestCaseSource(nameof(DecimalClauseTestCases))]
-    public void NewClause_BuildsDecimalCorrectly(
+    public void NewClause_BuildsMustDecimalCorrectly(
         DecimalClauseTestType opts,
         Func<IWithDecorator, decimal, IClause> buildClause)
     {

@@ -11,7 +11,7 @@ internal static class ClauseOperatorsExtensions
     extension(ClauseOperators op)
     {
         /// <summary>
-        /// Converts the instance into its string representation.
+        /// Converts the instance into its unencoded string representation.
         /// </summary>
         /// <returns>
         /// The symbol(s) that represent the operator in the
@@ -20,7 +20,7 @@ internal static class ClauseOperatorsExtensions
         /// <exception cref="ArgumentOutOfRangeException">
         /// Indicates that an invalid operator option was used.
         /// </exception>
-        public string Stringify()
+        public string ToUnencodedString()
         {
             return op switch
             {
@@ -34,6 +34,16 @@ internal static class ClauseOperatorsExtensions
             };
         }
 
+        /// <summary>
+        /// Converts the instance into its URI encoded string representation.
+        /// </summary>
+        /// <returns>
+        /// The symbol(s) that represent the operator in the
+        /// <see cref="QueryString"/>
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Indicates that an invalid operator option was used.
+        /// </exception>
         public string ToString()
         {
             return op switch

@@ -47,20 +47,20 @@ internal sealed class Clause<T> : IClause where T : notnull
     /// <inheritdoc cref="IClause.ToString" />
     public override string ToString()
     {
-        // Set specifier with decorator attached
-        string specifierWithDecorator = Decorator == ClauseDecorators.Must
-            ? string.Empty
-            : "-";
-        specifierWithDecorator += $"{Specifier}";
-
         string newValue = Value switch
         {
-            bool b => b.ToString().ToLowerInvariant(), // Convert boolean values to lowercase because .NET capitalizes them by default.
-            string s => $"\"{HttpUtility.UrlEncode(s)}\"", // Encode strings.
-            _ => Value.ToString() ?? string.Empty // Anything else gets to be a string without encoding.
+            // Convert boolean values to lowercase because .NET capitalizes them by default.
+            bool b => b.ToString().ToLowerInvariant(), 
+            
+            // Encode strings.
+            string s => $"\"{HttpUtility.UrlEncode(s)}\"", 
+            
+            // Anything else gets to be a string without encoding.
+            _ => Value.ToString() ?? string.Empty 
         };
 
-        return $"{specifierWithDecorator}{ClauseOperator.Stringify()}{newValue}";
+        return $"{Decorator.GetStringValue()}{Specifier}{ClauseOperator
+            .GetStringValue()}{newValue}";
     }
 
     /// <inheritdoc cref="IClause.ToStringUnencoded" />
