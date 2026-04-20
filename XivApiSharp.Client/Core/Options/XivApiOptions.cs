@@ -9,7 +9,7 @@ namespace XivApiSharp.Client.Core.Options;
 /// <remarks>
 /// All options are required and validated at startup.
 /// </remarks>
-internal sealed class XivApiOptions
+public sealed class XivApiOptions
 {
     /// <summary>
     /// Represents the base url for the XIV API.

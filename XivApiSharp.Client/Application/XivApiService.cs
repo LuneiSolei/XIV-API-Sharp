@@ -41,12 +41,13 @@ public class XivApiService
     /// <param name="internalDependencies">
     /// The dependencies required by XivApiService.
     /// </param>
-    internal XivApiService(IOptions<XivApiOptions> opts, HttpClient client, IInternalDependencies internalDependencies)
+    public XivApiService(IOptions<XivApiOptions> opts, HttpClient client,
+        IInternalDependencies internalDependencies)
     {
         _opts = opts.Value;
         _internalDependencies = internalDependencies;
     }
-
+    
     /// <summary>
     /// Creates a new instance of ClauseBuilder.
     /// </summary>

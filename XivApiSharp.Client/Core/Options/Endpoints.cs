@@ -12,7 +12,7 @@ namespace XivApiSharp.Client.Core.Options;
 /// startup.
 /// </remarks>
 [UsedImplicitly]
-internal sealed class Endpoints
+public sealed class Endpoints
 {
     /// <summary>
     /// Represents the endpoint for the search sheet API.
