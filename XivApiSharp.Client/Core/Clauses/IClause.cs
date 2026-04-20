@@ -40,7 +40,7 @@ public interface IClause
     /// <br/>
     /// *The official documentation states that multiple clauses are separated
     /// by whitespace. However, experimentation has proven that this results in
-    /// undesired behavior. Using literal plus signs (+) for multipel clauses
+    /// undesired behavior. Using literal plus signs (+) for multiple clauses
     /// instead of whitespace resolves this issue. By extension, use URI encoded
     /// plus signs (%2B) when using "Must Be" decorated clauses.
     /// </remarks>
