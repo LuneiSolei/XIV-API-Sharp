@@ -54,7 +54,7 @@ public class ClauseTests
         // GreaterThanOrEqualTo
         yield return new TestCaseData(
                 options.Clauses.GreaterThanOrEqualTo.IntTest, 
-                (Func<IWithConditional, int, IClause>)((step, value) => step.GreaterThanOrEqualTo(value)))
+                (Func<IWithConditional, int, IClause>)((step, value) => step.GreaterThanOrEqual(value)))
             .SetName("GreaterThanOrEqualTo (int)");
         
         // LessThan
@@ -66,7 +66,7 @@ public class ClauseTests
         // LessThanOrEqualTo
         yield return new TestCaseData(
                 options.Clauses.LessThanOrEqualTo.IntTest, 
-                (Func<IWithConditional, int, IClause>)((step, value) => step.LessThanOrEqualTo(value)))
+                (Func<IWithConditional, int, IClause>)((step, value) => step.LessThanOrEqual(value)))
             .SetName("LessThanOrEqualTo (int)");
     }
 
@@ -89,7 +89,7 @@ public class ClauseTests
         // GreaterThanOrEqualTo
         yield return new TestCaseData(
                 options.Clauses.GreaterThanOrEqualTo.DoubleTest, 
-                (Func<IWithConditional, double, IClause>)((step, value) => step.GreaterThanOrEqualTo(value)))
+                (Func<IWithConditional, double, IClause>)((step, value) => step.GreaterThanOrEqual(value)))
             .SetName("GreaterThanOrEqualTo (double)");
         
         // LessThan
@@ -101,7 +101,7 @@ public class ClauseTests
         // LessThanOrEqualTo
         yield return new TestCaseData(
                 options.Clauses.LessThanOrEqualTo.DoubleTest, 
-                (Func<IWithConditional, double, IClause>)((step, value) => step.LessThanOrEqualTo(value)))
+                (Func<IWithConditional, double, IClause>)((step, value) => step.LessThanOrEqual(value)))
             .SetName("LessThanOrEqualTo (double)");
     }
     
@@ -124,7 +124,7 @@ public class ClauseTests
         // GreaterThanOrEqualTo
         yield return new TestCaseData(
                 options.Clauses.GreaterThanOrEqualTo.DecimalTest, 
-                (Func<IWithConditional, decimal, IClause>)((step, value) => step.GreaterThanOrEqualTo(value)))
+                (Func<IWithConditional, decimal, IClause>)((step, value) => step.GreaterThanOrEqual(value)))
             .SetName("GreaterThanOrEqualTo (decimal)");
         
         // LessThan
@@ -136,7 +136,7 @@ public class ClauseTests
         // LessThanOrEqualTo
         yield return new TestCaseData(
                 options.Clauses.LessThanOrEqualTo.DecimalTest, 
-                (Func<IWithConditional, decimal, IClause>)((step, value) => step.LessThanOrEqualTo(value)))
+                (Func<IWithConditional, decimal, IClause>)((step, value) => step.LessThanOrEqual(value)))
             .SetName("LessThanOrEqualTo (decimal)");
     }
 
@@ -148,7 +148,7 @@ public class ClauseTests
         IClauseBuilder builder = TestingSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
-                .MustBe, opts.Value);
+                .Must, opts.Value);
         
         Assert.That(clause.ToString(), 
             Is.EqualTo(opts.ExpectedValue));
@@ -162,7 +162,7 @@ public class ClauseTests
         IClauseBuilder builder = TestingSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
-                .MustBe, opts.Value);
+                .Must, opts.Value);
         
         Assert.That(clause.ToString(),
             Is.EqualTo(opts.ExpectedValue));
@@ -176,7 +176,7 @@ public class ClauseTests
         IClauseBuilder builder = TestingSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
-                .MustBe, opts.Value);
+                .Must, opts.Value);
         
         Assert.That(clause.ToString(),
             Is.EqualTo(opts.ExpectedValue));
@@ -190,7 +190,7 @@ public class ClauseTests
         IClauseBuilder builder = TestingSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
-                .MustBe, opts.Value);
+                .Must, opts.Value);
         
         Assert.That(clause.ToString(),
             Is.EqualTo(opts.ExpectedValue));
@@ -204,7 +204,7 @@ public class ClauseTests
         IClauseBuilder builder = TestingSetup.ApiService.NewClause();
         
         IClause clause = buildClause(builder.WhereSpecifier(opts.Specifier)
-                .MustBe, opts.Value);
+                .Must, opts.Value);
         
         Assert.That(clause.ToString(),
             Is.EqualTo(opts.ExpectedValue));

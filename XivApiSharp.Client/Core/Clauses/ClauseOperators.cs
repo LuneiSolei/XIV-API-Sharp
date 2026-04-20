@@ -9,12 +9,12 @@ internal enum ClauseOperators
     /// <summary>
     /// Uses the <c>"~="</c> operator.
     /// </summary>
-    PartiallyEqualTo,
+    PartiallyEqual,
     
     /// <summary>
     /// Uses the <c>=</c> operator.
     /// </summary>
-    EqualTo,
+    Equal,
     
     /// <summary>
     /// Uses the <c>&lt;</c> operator.
@@ -24,7 +24,7 @@ internal enum ClauseOperators
     /// <summary>
     /// Uses the <c>&lt;=</c> operator.
     /// </summary>
-    LessThanOrEqualTo,
+    LessThanOrEqual,
     
     /// <summary>
     /// Uses the <c>&gt;</c> operator.
@@ -34,5 +34,5 @@ internal enum ClauseOperators
     /// <summary>
     /// Uses the <c>&gt;=</c> operator.
     /// </summary>
-    GreaterThanOrEqualTo
+    GreaterThanOrEqual
 }

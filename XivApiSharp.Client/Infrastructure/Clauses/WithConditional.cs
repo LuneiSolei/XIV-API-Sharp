@@ -23,35 +23,35 @@ internal sealed class WithConditional(string specifier,
 
     /// <inheritdoc/>
     public IClause PartiallyEqual(string value) =>
-        BuildClause(ClauseOperators.PartiallyEqualTo, value);
+        BuildClause(ClauseOperators.PartiallyEqual, value);
 
     /// <inheritdoc/>
     public IClause Equal(string value) =>
-        BuildClause(ClauseOperators.EqualTo, value);
+        BuildClause(ClauseOperators.Equal, value);
 
     /// <inheritdoc/>
     public IClause Equal(bool value) =>
-        BuildClause(ClauseOperators.EqualTo, value);
+        BuildClause(ClauseOperators.Equal, value);
 
     /// <inheritdoc/>
     public IClause Equal<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.EqualTo, value);
+        BuildClause(ClauseOperators.Equal, value);
 
     /// <inheritdoc/>
     public IClause GreaterThan<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.GreaterThan, value);
 
     /// <inheritdoc/>
-    public IClause GreaterThanOrEqualTo<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.GreaterThanOrEqualTo, value);
+    public IClause GreaterThanOrEqual<T>(T value) where T : INumber<T> =>
+        BuildClause(ClauseOperators.GreaterThanOrEqual, value);
 
     /// <inheritdoc/>
     public IClause LessThan<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.LessThan, value);
 
     /// <inheritdoc/>
-    public IClause LessThanOrEqualTo<T>(T value) where T : INumber<T> =>
-        BuildClause(ClauseOperators.LessThanOrEqualTo, value);
+    public IClause LessThanOrEqual<T>(T value) where T : INumber<T> =>
+        BuildClause(ClauseOperators.LessThanOrEqual, value);
     
     /// <summary>
     /// Builds a clause by assigning the specified operator and

@@ -12,14 +12,14 @@ internal sealed class WhereSpecifier(string specifier,
     private readonly string _specifier = specifier;
     
     /// <inheritdoc/>
-    public IWithConditional MustBe
+    public IWithConditional Must
     {
         get => new WithConditional(_specifier, 
             ClauseConditionals.Must, clauseFactory);
     }
 
     /// <inheritdoc/>
-    public IWithConditional MustNotBe
+    public IWithConditional MustNot
     {
         get => new WithConditional(_specifier, 
             ClauseConditionals.MustNot, clauseFactory);

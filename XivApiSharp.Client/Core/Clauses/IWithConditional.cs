@@ -82,7 +82,7 @@ public interface IWithConditional
     /// An individual <see cref="IClause"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
-    IClause GreaterThanOrEqualTo<T>(T value) where T : INumber<T>;
+    IClause GreaterThanOrEqual<T>(T value) where T : INumber<T>;
 
     /// <summary>
     /// Sets the clause to use the less than operator (&lt;) against the
@@ -112,5 +112,5 @@ public interface IWithConditional
     /// An individual <see cref="IClause"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
-    IClause LessThanOrEqualTo<T>(T value) where T : INumber<T>;
+    IClause LessThanOrEqual<T>(T value) where T : INumber<T>;
 }

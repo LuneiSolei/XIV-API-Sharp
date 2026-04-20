@@ -1,3 +1,4 @@
+using System.Web;
 using XivApiSharp.Client.Core.Clauses;
 
 namespace XivApiSharp.Client.Core.Extensions;
@@ -23,12 +24,28 @@ internal static class ClauseOperatorsExtensions
         {
             return op switch
             {
-                ClauseOperators.EqualTo => "=",
-                ClauseOperators.PartiallyEqualTo => "~",
+                ClauseOperators.Equal => "=",
+                ClauseOperators.PartiallyEqual => "~",
                 ClauseOperators.LessThan => "<",
-                ClauseOperators.LessThanOrEqualTo => "<=",
+                ClauseOperators.LessThanOrEqual => "<=",
                 ClauseOperators.GreaterThan => ">",
-                ClauseOperators.GreaterThanOrEqualTo => ">=",
+                ClauseOperators.GreaterThanOrEqual => ">=",
+                _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
+            };
+        }
+
+        public string ToString()
+        {
+            return op switch
+            {
+                ClauseOperators.Equal => HttpUtility.UrlEncode("="),
+                ClauseOperators.PartiallyEqual => HttpUtility.UrlEncode("~"),
+                ClauseOperators.GreaterThan => HttpUtility.UrlEncode(">"),
+                ClauseOperators.LessThan => HttpUtility.UrlEncode("<"),
+                ClauseOperators.LessThanOrEqual =>
+                    HttpUtility.UrlEncode("<="),
+                ClauseOperators.GreaterThanOrEqual =>
+                    HttpUtility.UrlEncode(">="),
                 _ => throw new ArgumentOutOfRangeException(nameof(op), op, null)
             };
         }
