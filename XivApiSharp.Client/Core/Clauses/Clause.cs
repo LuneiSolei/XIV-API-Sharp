@@ -29,7 +29,7 @@ internal sealed class Clause<T> : IClause where T : notnull
         Value = value;
         Decorator = decorator;
     }
-
+    public SchemaLanguage Language { get; set; }
     /// <inheritdoc/>
     public string EncodedValue { get; set; }
 

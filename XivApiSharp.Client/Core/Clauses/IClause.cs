@@ -21,4 +21,6 @@ public interface IClause : IClauseElement
     /// The boolean operator state of the clause.
     /// </summary>
     internal ClauseDecorators Decorator { get; set; }
+    
+    internal SchemaLanguage Language { get; set; }
 }
