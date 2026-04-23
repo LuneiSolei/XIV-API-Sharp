@@ -1,3 +1,5 @@
+using XivApiSharp.Client.Infrastructure.Clauses;
+
 namespace XivApiSharp.Client.Core.Clauses;
 
 /// <summary>

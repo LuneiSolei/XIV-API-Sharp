@@ -1,7 +1,9 @@
 using System.Web;
+using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.Extensions;
 
-namespace XivApiSharp.Client.Core.Clauses;
+namespace XivApiSharp.Client.Infrastructure.Clauses;
 
 /// <inheritdoc cref="IClause"/>
 internal sealed class Clause<T> : BaseClause, IClause where T : notnull
