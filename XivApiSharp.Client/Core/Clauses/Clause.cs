@@ -47,8 +47,8 @@ internal sealed class Clause<T> : IClause where T : notnull
     /// <inheritdoc/>
     public ClauseDecorators Decorator { get; set; }
 
-    /// <inheritdoc cref="IClauseElement.ToEncodedString"/>
-    public string ToEncodedString()
+    /// <inheritdoc cref="IClauseElement.ToUriEncodedString"/>
+    public string ToUriEncodedString()
     {
         string newValue = Value switch
         {

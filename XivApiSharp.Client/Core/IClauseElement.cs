@@ -7,11 +7,6 @@ namespace XivApiSharp.Client.Core;
 public interface IClauseElement
 {
     /// <summary>
-    /// Represents the string value to be used by the <see cref="QueryString"/>.
-    /// </summary>
-    string EncodedValue { get => ToEncodedString(); }
-    
-    /// <summary>
     /// Converts this instance into its URI encoded string representation.
     /// </summary>
     /// <remarks>
@@ -22,17 +17,17 @@ public interface IClauseElement
     /// The URI encoded string representation of this instance.
     /// </returns>
     /// <seealso cref="ToUnencodedString"/>
-    string ToEncodedString();
+    string ToUriEncodedString();
 
     /// <summary>
     /// Converts this instance into its unencoded string representation.
     /// </summary>
     /// <remarks>
-    /// To retrieve a URI encoded version, use <see cref="ToEncodedString"/> instead.
+    /// To retrieve a URI encoded version, use <see cref="ToUriEncodedString"/> instead.
     /// </remarks>
     /// <returns>
     /// The unencoded string representation of this instance. 
     /// </returns>
-    /// <seealso cref="ToEncodedString"/>
+    /// <seealso cref="ToUriEncodedString"/>
     string ToUnencodedString();
 }

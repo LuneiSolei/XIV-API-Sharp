@@ -7,7 +7,7 @@ namespace XivApiSharp.Client.Core.ClauseGroups;
 public interface IClauseGroup : IClauseElement
 {
     /// <summary>
-    /// Acts as a wrapper for <see cref="ToEncodedString"/>. 
+    /// Acts as a wrapper for <see cref="ToUriEncodedString"/>. 
     /// </summary>
     /// <returns>A URI encoded string representing this instance.</returns>
     string ToString();

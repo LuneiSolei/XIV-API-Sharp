@@ -23,4 +23,6 @@ public interface IClause : IClauseElement
     internal ClauseDecorators Decorator { get; set; }
     
     internal SchemaLanguage Language { get; set; }
+    
+    
 }
