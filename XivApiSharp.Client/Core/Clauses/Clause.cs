@@ -10,21 +10,65 @@ internal sealed class Clause<T> : IClause where T : notnull
     /// The value of clause to be compared.
     /// </summary>
     private T Value { get; }
-        
-    /// <inheritdoc/>
-    public SchemaLanguage Language { get; set; }
+
+    /// <summary>
+    /// Cache for storing the URI encoded string representation of the instance.
+    /// </summary>
+    private string UriEncodedCache { get; set; }
+
+    /// <summary>
+    /// Cache for storing the unencoded string representation of this instance.
+    /// </summary>
+    private string UnencodedCache { get; set; }
+
+    /// <summary>
+    /// Indicates if the cache needs to be rebuilt.
+    /// </summary>
+    private bool _isCacheStale;
 
     /// <inheritdoc/>
-    public string EncodedValue { get; set; } = "";
+    public SchemaLanguage Language
+    {
+        get;
+        set
+        {
+            _isCacheStale = true;
+            field = value;
+        }
+    }
 
     /// <inheritdoc />
-    public string Specifier { get; set; }
+    public string Specifier
+    {
+        get;
+        set
+        {
+            _isCacheStale = true;
+            field = value;
+        }
+    }
 
     /// <inheritdoc />
-    public ClauseOperators ClauseOperator { get; set; }
-    
+    public ClauseOperators ClauseOperator
+    {
+        get;
+        set
+        {
+            _isCacheStale = true;
+            field = value;
+        }
+    }
+
     /// <inheritdoc/>
-    public ClauseDecorators Decorator { get; set; }
+    public ClauseDecorators Decorator
+    {
+        get;
+        set
+        {
+            _isCacheStale = true;
+            field = value;
+        }
+    }
         
     /// <summary>
     /// Main constructor for clause.
@@ -53,10 +97,29 @@ internal sealed class Clause<T> : IClause where T : notnull
         Value = value;
         Decorator = decorator;
         Language = lang;
+        _isCacheStale = true;
     }
 
-    /// <inheritdoc cref="IClauseElement.ToUriEncodedString"/>
+    /// <inheritdoc/>
     public string ToUriEncodedString()
+    {
+        if (_isCacheStale) RebuildUriEncodedCache();
+        
+        return UriEncodedCache;
+    }
+
+    /// <inheritdoc/>
+    public string ToUnencodedString()
+    {
+        if (_isCacheStale) RebuildUnencodedCache();
+        
+        return UnencodedCache;
+    }
+
+    /// <summary>
+    /// Rebuilds the URI encoded string cache for this instance.
+    /// </summary>
+    private void RebuildUriEncodedCache()
     {
         string encodedDecorator = Decorator.ToUriEncodedString();
         string encodedOperator = ClauseOperator.ToUriEncodedString();
@@ -73,7 +136,8 @@ internal sealed class Clause<T> : IClause where T : notnull
         // Determine new encoded clause value
         string encodedValue = Value switch
         {
-            // Convert boolean values to lowercase because .NET capitalizes them by default.
+            // Convert boolean values to lowercase because .NET capitalizes
+            // them by default.
             bool b => b.ToString().ToLowerInvariant(), 
             
             // Encode strings.
@@ -83,11 +147,22 @@ internal sealed class Clause<T> : IClause where T : notnull
             _ => Value.ToString() ?? string.Empty 
         };
 
-        return $"{encodedDecorator}{encodedSpecifier}{encodedLanguage}"
-               + $"{encodedOperator}{encodedValue}";
+        UriEncodedCache = $"{encodedDecorator}{encodedSpecifier}"
+                          + $"{encodedLanguage}{encodedOperator}{encodedValue}";
     }
 
-    /// <inheritdoc cref="IClause.ToUnencodedString"/>
-    public string ToUnencodedString() =>
-        throw new NotImplementedException();
+    /// <summary>
+    /// Rebuilds the unencoded string cache for this instance.
+    /// </summary>
+    private void RebuildUnencodedCache()
+    {
+        string decorator = Decorator.GetStringValue();
+        string specifier = Specifier;
+        string lang = Language == SchemaLanguage.None ? string.Empty : Language.ToString();
+        string clauseOperator = ClauseOperator.GetStringValue();
+        string value = Value.ToString() ?? string.Empty;
+
+        UnencodedCache =  $"{decorator}{specifier}{lang}"
+                          + $"{clauseOperator}{value}";
+    }
 }

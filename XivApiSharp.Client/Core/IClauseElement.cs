@@ -7,12 +7,8 @@ namespace XivApiSharp.Client.Core;
 public interface IClauseElement
 {
     /// <summary>
-    /// Converts this instance into its URI encoded string representation.
+    /// Gets this instance's URI encoded string representation.
     /// </summary>
-    /// <remarks>
-    /// All strings are automatically URI encoded by default. To retrieve an
-    /// unencoded string, use <see cref="ToUnencodedString"/> instead.
-    /// </remarks>
     /// <returns>
     /// The URI encoded string representation of this instance.
     /// </returns>
@@ -22,9 +18,6 @@ public interface IClauseElement
     /// <summary>
     /// Converts this instance into its unencoded string representation.
     /// </summary>
-    /// <remarks>
-    /// To retrieve a URI encoded version, use <see cref="ToUriEncodedString"/> instead.
-    /// </remarks>
     /// <returns>
     /// The unencoded string representation of this instance. 
     /// </returns>
