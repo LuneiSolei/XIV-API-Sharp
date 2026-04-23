@@ -29,7 +29,10 @@ internal sealed class Clause<T> : IClause where T : notnull
         Value = value;
         Decorator = decorator;
     }
-    
+
+    /// <inheritdoc/>
+    public string EncodedValue { get; set; }
+
     /// <inheritdoc />
     public string Specifier { get; set; }
 
@@ -44,8 +47,8 @@ internal sealed class Clause<T> : IClause where T : notnull
     /// <inheritdoc/>
     public ClauseDecorators Decorator { get; set; }
 
-    /// <inheritdoc cref="IClause.ToString"/>
-    public override string ToString()
+    /// <inheritdoc cref="IClauseElement.ToEncodedString"/>
+    public string ToEncodedString()
     {
         string newValue = Value switch
         {
@@ -63,7 +66,7 @@ internal sealed class Clause<T> : IClause where T : notnull
             .GetStringValue()}{newValue}";
     }
 
-    /// <inheritdoc cref="IClause.ToStringUnencoded"/>
-    public string ToStringUnencoded() =>
+    /// <inheritdoc cref="IClause.ToUnencodedString"/>
+    public string ToUnencodedString() =>
         throw new NotImplementedException();
 }

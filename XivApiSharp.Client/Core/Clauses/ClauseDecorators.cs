@@ -26,6 +26,4 @@ internal enum ClauseDecorators
     /// </summary>
     [StringValue("-")]
     MustNot
-    
-    
 }
