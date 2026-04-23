@@ -4,7 +4,7 @@ namespace XivApiSharp.Client.Core.Clauses;
 /// Represents the boolean state of a clause.
 /// </summary>
 /// <seealso cref="Clause{T}">Clause&lt;T&gt;</seealso>
-internal enum ClauseDecorators
+public enum ClauseDecorators
 {
     /// <summary>
     /// Helper enum which specifies that no decorator is used.
