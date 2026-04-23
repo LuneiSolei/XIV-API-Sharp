@@ -3,71 +3,40 @@ using XivApiSharp.Client.Core.Extensions;
 
 namespace XivApiSharp.Client.Core.Clauses;
 
-/// <inheritdoc />
-internal sealed class Clause<T> : IClause where T : notnull
+/// <inheritdoc cref="IClause"/>
+internal sealed class Clause<T> : BaseClause, IClause where T : notnull
 {
         /// <summary>
     /// The value of clause to be compared.
     /// </summary>
     private T Value { get; }
-
-    /// <summary>
-    /// Cache for storing the URI encoded string representation of the instance.
-    /// </summary>
-    private string UriEncodedCache { get; set; }
-
-    /// <summary>
-    /// Cache for storing the unencoded string representation of this instance.
-    /// </summary>
-    private string UnencodedCache { get; set; }
-
-    /// <summary>
-    /// Indicates if the cache needs to be rebuilt.
-    /// </summary>
-    private bool _isCacheStale;
-
-    /// <inheritdoc/>
+    
+    /// <inheritdoc cref="IClause.Language"/>
     public SchemaLanguage Language
     {
-        get;
-        set
-        {
-            _isCacheStale = true;
-            field = value;
-        }
+        get => GetCached(ref field);
+        set => SetCached(ref field, value);
     }
-
+    
     /// <inheritdoc />
     public string Specifier
     {
-        get;
-        set
-        {
-            _isCacheStale = true;
-            field = value;
-        }
+        get => GetCached(ref field);
+        set => SetCached(ref field, value);
     }
 
     /// <inheritdoc />
     public ClauseOperators ClauseOperator
     {
-        get;
-        set
-        {
-            _isCacheStale = true;
-            field = value;
-        }
+        get => GetCached(ref field);
+        set => SetCached(ref field, value);
     }
 
     /// <inheritdoc/>
     public ClauseDecorators Decorator
     {
-        get;
-        set
-        {
-            _isCacheStale = true;
-            field = value;
-        }
+        get => GetCached(ref field);
+        set => SetCached(ref field, value);
     }
         
     /// <summary>
@@ -89,7 +58,7 @@ internal sealed class Clause<T> : IClause where T : notnull
     /// (Optional) The language to use for this Clause.
     /// </param>
     /// <seealso cref="IClause"/>
-    public Clause(string specifier, ClauseOperators op, T value, 
+    internal Clause(string specifier, ClauseOperators op, T value, 
         ClauseDecorators decorator, SchemaLanguage lang = SchemaLanguage.None)
     {
         Specifier = specifier;
@@ -97,29 +66,13 @@ internal sealed class Clause<T> : IClause where T : notnull
         Value = value;
         Decorator = decorator;
         Language = lang;
-        _isCacheStale = true;
     }
 
     /// <inheritdoc/>
-    public string ToUriEncodedString()
-    {
-        if (_isCacheStale) RebuildUriEncodedCache();
-        
-        return UriEncodedCache;
-    }
-
+    public override string ToString() => ToUriEncodedString();
+    
     /// <inheritdoc/>
-    public string ToUnencodedString()
-    {
-        if (_isCacheStale) RebuildUnencodedCache();
-        
-        return UnencodedCache;
-    }
-
-    /// <summary>
-    /// Rebuilds the URI encoded string cache for this instance.
-    /// </summary>
-    private void RebuildUriEncodedCache()
+    private protected override void RebuildUriEncodedCache()
     {
         string encodedDecorator = Decorator.ToUriEncodedString();
         string encodedOperator = ClauseOperator.ToUriEncodedString();
@@ -151,10 +104,8 @@ internal sealed class Clause<T> : IClause where T : notnull
                           + $"{encodedLanguage}{encodedOperator}{encodedValue}";
     }
 
-    /// <summary>
-    /// Rebuilds the unencoded string cache for this instance.
-    /// </summary>
-    private void RebuildUnencodedCache()
+    /// <inheritdoc/>
+    private protected override void RebuildUnencodedCache()
     {
         string decorator = Decorator.GetStringValue();
         string specifier = Specifier;
@@ -164,5 +115,41 @@ internal sealed class Clause<T> : IClause where T : notnull
 
         UnencodedCache =  $"{decorator}{specifier}{lang}"
                           + $"{clauseOperator}{value}";
+    }
+
+    /// <summary>
+    /// Rebuilds all cached values.
+    /// </summary>
+    private void UpdateCache()
+    {
+        RebuildUnencodedCache();
+        RebuildUriEncodedCache();
+        IsCacheStale = false;
+    }
+
+    /// <summary>
+    /// Updates the cache, if necessary, and then retrieves the cached value 
+    /// from its backing field.
+    /// </summary>
+    /// <param name="field">The backing field.</param>
+    /// <typeparam name="TCache">The backing field's type.</typeparam>
+    /// <returns>The updated cache value.</returns>
+    private TCache GetCached<TCache>(ref TCache field)
+    {
+        if (IsCacheStale) UpdateCache();
+        return field;
+    }
+
+    /// <summary>
+    /// Sets the backing field to the updated value and then rebuilds all 
+    /// caches.
+    /// </summary>
+    /// <param name="field">The backing field.</param>
+    /// <param name="value">The new value.</param>
+    /// <typeparam name="TCache">The backing field's type.</typeparam>
+    private void SetCached<TCache>(ref TCache field, TCache value)
+    {
+        field = value;
+        UpdateCache();
     }
 }
