@@ -11,6 +11,9 @@ public interface IClauseBuilder
     /// <param name="specifier">
     /// The specifier of the specifier to use.
     /// </param>
+    /// <returns>
+    /// The optional language step of the clause builder.
+    /// </returns>
     /// <seealso cref="IClause"/>
     IOptionalLanguageStep WhereSpecifier(string specifier);
 }
