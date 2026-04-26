@@ -5,19 +5,22 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using XivApiSharp.Client.Application;
+using XivApiSharp.Client.Core;
+using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Tests.Options;
+using XivApiSharp.Tests.Options.Schemas.ClauseTests;
 
 namespace XivApiSharp.Tests;
 
 [SetUpFixture]
-internal class TestSetup
+internal static class TestSetup
 {
     private const string FileName = "appsettings.json";
     private static IConfiguration _config = null!;
-    internal readonly static IServiceProvider ServiceContainer;
+    internal static readonly IServiceProvider ServiceContainer;
     internal static TopLevelOptions Options { get; }
-    internal readonly static XivApiService Service;
-    
+    internal static readonly XivApiService Service;
+
     static TestSetup()
     {
         // Create dependency injection container with configure custom testing
@@ -27,36 +30,70 @@ internal class TestSetup
             .Configure<TopLevelOptions>(_config.GetSection("TestingOptions"))
             .AddXivApiService()
             .BuildServiceProvider();
-        
+
         // Store and validate options from DI container
         Options = ServiceContainer
             .GetRequiredService<IOptions<TopLevelOptions>>().Value;
         ValidateOptions();
-        
+
         // Store XivApiService
         Service = ServiceContainer.GetRequiredService<XivApiService>();
+    }
+
+    public static IClause<TValue> SetUpClause<TOptions, TValue>(TOptions options, TValue value)
+        where TOptions : IBaseClauseOptions
+        where TValue : notnull
+    {
+        IClauseFactory factory = ServiceContainer
+            .GetRequiredService<IClauseFactory>();
+
+        // Convert decorator option from string to type
+        if (!Enum.TryParse(options.Decorator, out ClauseDecorators decorator))
+            Assert.Fail("The provided option 'Decorator' is not valid.");
+
+        // Convert language option from string to type
+        if (!Enum.TryParse(options.Language, out SchemaLanguage language))
+            Assert.Fail("The provided option 'Language' is not valid.");
+
+        // Convert operator option from string to type
+        if (!Enum.TryParse(options.Operator, out ClauseOperators operation))
+            Assert.Fail("The provided option 'Operator' is not valid.");
+
+        if (value is TValue)
+        {
+            return factory.CreateClause(
+                decorator: decorator,
+                specifier: options.Specifier,
+                language: language,
+                op: operation,
+                value: value
+            );
+        }
+
+        Assert.Fail($"The provided option 'Value' is not of type {typeof(TValue).Name}");
+        return null;
     }
 
     private static void ConfigureOptions()
     {
         // Get our current assembly
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        
-        // Using the default namespace, get the full resource name. Throw 
+        var assembly = Assembly.GetExecutingAssembly();
+
+        // Using the default namespace, get the full resource name. Throw
         // exception if not found.
         string resourceName = assembly.GetManifestResourceNames()
-            .FirstOrDefault(name => 
+            .FirstOrDefault(name =>
                 name.EndsWith(FileName, StringComparison.OrdinalIgnoreCase))
             ?? throw new MissingManifestResourceException(
-                $"No manifest resource ending with '{FileName}' could be " + 
+                $"No manifest resource ending with '{FileName}' could be " +
                 $"found.");
-        
+
         // From the full resource name, get the file stream
         using Stream stream = assembly.GetManifestResourceStream(resourceName)
             ?? throw new MissingManifestResourceException(
                 $"Stream for required manifest resource '{resourceName}' " +
                 $"not found");
-        
+
         _config = new ConfigurationBuilder()
             .AddJsonStream(stream)
             .Build();
@@ -71,9 +108,9 @@ internal class TestSetup
             new ValidationContext(Options),
             validationResults,
             validateAllProperties: true);
-        
+
         if (isValid) return;
-        
+
         string errors = string.Join(", ", validationResults.Select(r => r.ErrorMessage));
         throw new InvalidOperationException($"TestingOptions is invalid: {errors}");
     }

@@ -1,27 +1,25 @@
 using System.ComponentModel.DataAnnotations;
 using JetBrains.Annotations;
 
-namespace XivApiSharp.Tests.Options.Schemas.ClauseFactoryTests;
+namespace XivApiSharp.Tests.Options.Schemas.ClauseTests;
 
-
-[UsedImplicitly]
-public class CreateClauseTest
+public interface IBaseClauseOptions
 {
     [Required(AllowEmptyStrings = false), UsedImplicitly]
-    public required string Decorator { get; set; }
+    string Decorator { get; set; }
 
     [Required(AllowEmptyStrings = false), UsedImplicitly]
-    public required string Specifier { get; set; }
+    string Specifier { get; set; }
 
     [Required(AllowEmptyStrings = false), UsedImplicitly]
-    public required string Language { get; set; }
+    string Language { get; set; }
 
     [Required(AllowEmptyStrings = false), UsedImplicitly]
-    public required string Operator { get; set; }
+    string Operator { get; set; }
 
     [Required(AllowEmptyStrings = false), UsedImplicitly]
-    public required string Value { get; set; }
-    
+    string Value { get; set; }
+
     [Required(AllowEmptyStrings = false), UsedImplicitly]
-    public required string ExpectedValue { get; set; }
+    string ExpectedValue { get; set; }
 }
