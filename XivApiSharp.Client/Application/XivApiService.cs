@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using XivApiSharp.Client.Core.ClauseGroups;
 using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.InternalDependencies;
 using XivApiSharp.Client.Core.Options;
@@ -56,4 +57,7 @@ internal class XivApiService : IXivApiService
 
     /// <inheritdoc />
     public IClauseBuilder NewClause() => new ClauseBuilder(_internalDependencies.ClauseFactory);
+
+    /// <inheritdoc/>
+    public IClauseGroupBuilder NewClauseGroup() => new ClauseGroupBuilder(_internalDependencies.ClauseFactory);
 }
