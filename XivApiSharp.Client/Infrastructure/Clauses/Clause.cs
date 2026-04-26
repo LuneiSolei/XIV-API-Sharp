@@ -1,3 +1,4 @@
+using System.Text;
 using System.Web;
 using JetBrains.Annotations;
 using XivApiSharp.Client.Core;
@@ -13,7 +14,7 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
     /// Backing field for <see cref="Value"/>
     /// </summary>
     private T _value;
-    
+
     /// <summary>
     /// The value of clause to be compared.
     /// </summary>
@@ -32,14 +33,14 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
     /// Backing field for <see cref="Language"/>
     /// </summary>
     private SchemaLanguage _language;
-    
+
     /// <inheritdoc />
     public SchemaLanguage Language
     {
         get => _language;
-        set         
+        set
         {
-            _language = value; 
+            _language = value;
             UpdateCaches();
         }
     }
@@ -48,14 +49,14 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
     /// Backing field for <see cref="Specifier"/>
     /// </summary>
     private string _specifier;
-    
+
     /// <inheritdoc />
     public string Specifier
     {
         get => _specifier;
-        set         
+        set
         {
-            _specifier = value; 
+            _specifier = value;
             UpdateCaches();
         }
     }
@@ -64,30 +65,30 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
     /// Backing field for <see cref="ClauseOperator"/>.
     /// </summary>
     private ClauseOperators _clauseOperator;
-    
+
     /// <inheritdoc />
     public ClauseOperators ClauseOperator
     {
         get => _clauseOperator;
         set
         {
-            _clauseOperator = value; 
+            _clauseOperator = value;
             UpdateCaches();
         }
     }
-    
+
     /// <summary>
     /// Backing field for <see cref="Decorator"/>.
     /// </summary>
     private ClauseDecorators _decorator;
-    
+
     /// <inheritdoc/>
     public ClauseDecorators Decorator
     {
         get => _decorator;
         set
         {
-            _decorator = value; 
+            _decorator = value;
             UpdateCaches();
         }
     }
@@ -112,10 +113,10 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
     /// </param>
     /// <seealso cref="IClause{T}"/>
     internal Clause(
-        ClauseDecorators decorator, 
-        string specifier, 
-        SchemaLanguage language, 
-        ClauseOperators operation, 
+        ClauseDecorators decorator,
+        string specifier,
+        SchemaLanguage language,
+        ClauseOperators operation,
         T value)
     {
         _decorator = decorator;
@@ -123,38 +124,39 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
         _language = language;
         _clauseOperator = operation;
         _value = value;
+        UpdateCaches();
     }
 
     /// <inheritdoc/>
     public override string ToString() => ToUriEncodedString();
-    
+
     /// <inheritdoc/>
     private protected override void RebuildUriEncodedCache()
     {
-        string encodedDecorator = Decorator.ToUriEncodedString();
-        string encodedOperator = ClauseOperator.ToUriEncodedString();
+        string encodedDecorator = Decorator.ToUriEncodedString().ToUpper();
+        string encodedOperator = ClauseOperator.ToUriEncodedString().ToUpper();
         string encodedSpecifier = HttpUtility.UrlEncode(Specifier);
         string encodedLanguage = string.Empty;
-        
+
         // Use language, if any was provided
         if (Language != SchemaLanguage.None)
         {
             encodedLanguage = HttpUtility.UrlEncode(
                 $"@{Language.ToString().ToLower()}");
         }
-        
+
         // Determine new encoded clause value
         string encodedValue = Value switch
         {
             // Convert boolean values to lowercase because .NET capitalizes
             // them by default.
-            bool b => b.ToString().ToLowerInvariant(), 
-            
+            bool b => b.ToString().ToLowerInvariant(),
+
             // Encode strings.
-            string s => $"\"{HttpUtility.UrlEncode(s)}\"", 
-            
+            string s => $"\"{HttpUtility.UrlEncode(s)}\"",
+
             // Anything else gets to be a string without encoding.
-            _ => Value.ToString() ?? string.Empty 
+            _ => Value.ToString() ?? string.Empty
         };
 
         UriEncodedCache = $"{encodedDecorator}{encodedSpecifier}"
@@ -166,11 +168,11 @@ internal sealed class Clause<T> : BaseClause, IClause<T> where T : notnull
     {
         string decorator = Decorator.GetStringValue();
         string specifier = Specifier;
-        string lang = Language == SchemaLanguage.None ? string.Empty : Language.ToString();
+        string lang = Language == SchemaLanguage.None ? string.Empty : Language.GetStringValue();
         string clauseOperator = ClauseOperator.GetStringValue();
-        string value = Value.ToString() ?? string.Empty;
+        string value = $"\"{Value.ToString() ?? string.Empty}\"";
 
-        UnencodedCache =  $"{decorator}{specifier}{lang}"
+        UnencodedCache =  $"{decorator}{specifier}@{lang}"
                           + $"{clauseOperator}{value}";
     }
 }

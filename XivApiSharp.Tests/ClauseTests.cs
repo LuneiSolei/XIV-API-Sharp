@@ -7,21 +7,6 @@ namespace XivApiSharp.Tests;
 public class ClauseTests
 {
     [Test]
-    public void Factory_CreateClauseString_Success()
-    {
-        // Get the options
-        CreateClauseTest options = TestSetup
-            .Options
-            .ClauseTests
-            .CreateClauseTest;
-
-        // Test the clause
-        IClause<string> clause = TestSetup.SetUpClause(options, options.Value);
-        Assert.That(clause.ToUnencodedString(),
-            Is.EqualTo(options.ExpectedValue));
-    }
-
-    [Test]
     public void Clause_ToUriEncodedString_Succeeds()
     {
         ToUriEncodedStringTest options = TestSetup
@@ -34,5 +19,20 @@ public class ClauseTests
 
         IClause<uint> clause = TestSetup.SetUpClause(options, parsedValue);
         Assert.That(clause.ToUriEncodedString(), Is.EqualTo(options.ExpectedValue));
+    }
+
+    [Test]
+    public void Factory_CreateClauseString_Success()
+    {
+        // Get the options
+        CreateClauseTest options = TestSetup
+            .Options
+            .ClauseTests
+            .CreateClauseTest;
+
+        // Test the clause
+        IClause<string> clause = TestSetup.SetUpClause(options, options.Value);
+        Assert.That(clause.ToUnencodedString(),
+            Is.EqualTo(options.ExpectedValue));
     }
 }
