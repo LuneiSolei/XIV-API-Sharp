@@ -6,8 +6,8 @@ namespace XivApiSharp.Client.Infrastructure.Clauses;
 /// <summary>
 /// Builds a singular clause for use in a <see cref="QueryString"/>.
 /// </summary>
-/// <seealso cref="IClause"/>
-internal sealed partial class ClauseBuilder : IClauseBuilder, IOptionalLanguageStep, IOperatorStep, IValueStep
+/// <seealso cref="IClause{T}"/>
+internal sealed partial class ClauseBuilder : IClauseBuilder, IOptionalLanguageStep, IValueStep
 {
     /// <summary>
     /// The injected IClauseFactory for the builder to use.

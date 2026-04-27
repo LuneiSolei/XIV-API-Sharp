@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using XivApiSharp.Client.Core;
 using XivApiSharp.Client.Core.ClauseGroups;
 using XivApiSharp.Client.Core.Clauses;
 using XivApiSharp.Client.Core.InternalDependencies;

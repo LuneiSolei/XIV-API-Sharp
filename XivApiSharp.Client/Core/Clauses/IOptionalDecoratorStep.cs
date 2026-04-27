@@ -4,7 +4,7 @@ namespace XivApiSharp.Client.Core.Clauses;
 /// Defines properties for a ClauseBuilder that determine the boolean state of
 /// the clause.
 /// </summary>
-/// <seealso cref="IClause"/>
+/// <seealso cref="IClause{T}"/>
 public interface IOptionalDecoratorStep : IOperatorStep
 {
     /// <summary>

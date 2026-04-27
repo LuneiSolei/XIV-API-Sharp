@@ -1,11 +1,12 @@
 using System.Numerics;
+using JetBrains.Annotations;
 
 namespace XivApiSharp.Client.Core.Clauses;
 
 /// <summary>
 /// Defines methods for adding comparison operators to a clause.
 /// </summary>
-/// <seealso cref="IClause"/>
+/// <seealso cref="IClause{T}"/>
 public interface IOperatorStep
 {
     /// <summary>
@@ -13,9 +14,10 @@ public interface IOperatorStep
     /// </summary>
     /// <param name="value">The value to compare to.</param>
     /// <returns>
-    /// An individual <see cref="IClause"/> to be used with a
+    /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<string> Equal(string value);
 
     /// <summary>
@@ -24,9 +26,10 @@ public interface IOperatorStep
     /// </summary>
     /// <param name="value">The value to compare to.</param>
     /// <returns>
-    /// An individual <see cref="IClause"/> to be used with a
+    /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<bool> Equal(bool value);
 
     /// <summary>
@@ -39,9 +42,10 @@ public interface IOperatorStep
     /// <see cref="INumber{TSelf}">INumber&lt;TSelf&gt;</see> interface.
     /// </typeparam>
     /// <returns>
-    /// An individual <see cref="IClause"/> to be used with a
+    /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<T> Equal<T>(T value) where T : INumber<T>;
 
     /// <summary>
@@ -53,6 +57,7 @@ public interface IOperatorStep
     /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<string> PartiallyEqual(string value);
 
     /// <summary>
@@ -67,6 +72,7 @@ public interface IOperatorStep
     /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<T> GreaterThan<T>(T value) where T : INumber<T>;
 
     /// <summary>
@@ -82,6 +88,7 @@ public interface IOperatorStep
     /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<T> GreaterThanOrEqual<T>(T value) where T : INumber<T>;
 
     /// <summary>
@@ -97,6 +104,7 @@ public interface IOperatorStep
     /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<T> LessThan<T>(T value) where T : INumber<T>;
 
     /// <summary>
@@ -112,5 +120,6 @@ public interface IOperatorStep
     /// An individual <see cref="IClause{T}"/> to be used with a
     /// <see cref="QueryString"/>.
     /// </returns>
+    [UsedImplicitly]
     IClause<T> LessThanOrEqual<T>(T value) where T : INumber<T>;
 }

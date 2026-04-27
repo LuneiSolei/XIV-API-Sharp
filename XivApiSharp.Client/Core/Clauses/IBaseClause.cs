@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace XivApiSharp.Client.Core.Clauses;
 
 /// <summary>
@@ -13,15 +15,17 @@ public interface IBaseClause
     /// The URI encoded string representation of this instance.
     /// </returns>
     /// <seealso cref="ToUnencodedString"/>
+    [UsedImplicitly]
     string ToUriEncodedString();
 
     /// <summary>
     /// Converts this instance into its unencoded string representation.
     /// </summary>
     /// <returns>
-    /// The unencoded string representation of this instance. 
+    /// The unencoded string representation of this instance.
     /// </returns>
     /// <seealso cref="ToUriEncodedString"/>
+    [UsedImplicitly]
     string ToUnencodedString();
 
     /// <summary>
@@ -30,5 +34,6 @@ public interface IBaseClause
     /// <returns>
     /// The URI encoded string representation of this instance.
     /// </returns>
+    [UsedImplicitly]
     string ToString() => ToUriEncodedString();
 }
