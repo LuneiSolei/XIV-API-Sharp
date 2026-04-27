@@ -128,9 +128,6 @@ internal sealed class Clause<T> : BaseClause, IClause<T>
     }
 
     /// <inheritdoc/>
-    public override string ToString() => ToUriEncodedString();
-
-    /// <inheritdoc/>
     private protected override void RebuildUriEncodedCache()
     {
         string encodedDecorator = Decorator.ToUriEncodedString().ToUpper();
@@ -145,7 +142,6 @@ internal sealed class Clause<T> : BaseClause, IClause<T>
                 $"@{Language.ToString().ToLower()}");
         }
 
-        Console.WriteLine($"Is Number: {typeof(T)}");
         string encodedValue = Value switch
         {
             // If value is of a number type, return it as a string. Return as an empty string if value is null.
