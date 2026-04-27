@@ -37,8 +37,6 @@ internal sealed partial class ClauseBuilder
     public IClause<T> LessThanOrEqual<T>(T value) where T : INumber<T> =>
         BuildClause(ClauseOperators.LessThanOrEqual, value);
 
-
-
     /// <summary>
     /// Builds a clause by assigning the specified operator and
     /// <paramref name="value"/> to the clause.
