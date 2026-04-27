@@ -5,7 +5,7 @@ using XivApiSharp.Client.Core.Extensions;
 
 namespace XivApiSharp.Client.Core.ClauseGroups;
 
-/// <inheritdoc/>
+/// <inheritdoc cref="IClauseGroup"/>
 internal sealed class ClauseGroup : BaseClause, IClauseGroup
 {
     private string? _encodedValue;
@@ -28,12 +28,6 @@ internal sealed class ClauseGroup : BaseClause, IClauseGroup
 
     /// <inheritdoc cref="IClauseGroup.ToString"/>
     public override string ToString() => ToUriEncodedString();
-
-    /// <inheritdoc/>
-    public string ToUriEncodedString() => _encodedValue;
-
-    /// <inheritdoc/>
-    public string ToUnencodedString() => _unencodedValue;
 
     [UsedImplicitly]
     private protected override void RebuildUriEncodedCache()
